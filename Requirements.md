@@ -12,3 +12,9 @@
 	10. API access for external program to do statistics (Unspecified yet).
 	11. Published to a public server - has to have at least 95% uptime. 
 	12. Don't lose content. Have a buffer for incomming content during downtime etc.  
+
+
+
+To do:
+	Divide into functional and non-functional. 
+	Specify what systems to use when fulfilling the requirements. 
