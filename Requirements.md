@@ -18,3 +18,29 @@
 To do:
 	Divide into functional and non-functional. 
 	Specify what systems to use when fulfilling the requirements. 
+	
+	
+	
+User Stories:
+- As a user I want to be able to register so that I can use the features from the site
+
+- As a User I want to be able to log in so that I can participate in discussions
+
+- As a User I want to be able to comments in discussions
+
+- As a User I want to be able to vote on comments
+
+- As a User I want to be able to vote on discussions
+
+- As a User I want to be able to mark as discussions as spam
+
+- As a User I want an interface so that I can interact with the site
+
+- As an admin I want data to be stored in a database, so that I don't risk losing it. 
+
+- As an admin I want an API for testing purposes
+
+- As a product owner I want the site deployed on a server, so that users can access my product.
+
+- As a system I want a buffer for content when the site is down, so that I don't lose stuff.
+
