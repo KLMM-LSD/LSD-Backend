@@ -1,4 +1,7 @@
 ### Roles:
+Product owner
+- Helge
+
 Scrum master
 - Martin
 
