@@ -1,4 +1,19 @@
-# Hacker news, reddit like site Requirement:
+### Roles:
+Scrum master
+- Martin
+
+Test manager
+- Martin
+
+Architecture manager
+- Lasse
+
+Developers
+- Lasse
+- Martin
+- Michael
+
+### Hacker news, reddit like site Requirement:
 
 	1. Register Users
 	2. Comments / Discussions (Required to be logged in / Viewable otherwise)
@@ -21,7 +36,7 @@ To do:
 	
 	
 	
-User Stories:
+### User Stories:
 - As a user I want to be able to register so that I can use the features from the site
 
 - As a User I want to be able to log in so that I can participate in discussions
@@ -43,20 +58,3 @@ User Stories:
 - As a product owner I want the site deployed on a server, so that users can access my product.
 
 - As a system I want a buffer for content when the site is down, so that I don't lose stuff.
-
-
-
-### Roles:
-Scrum master
-- Martin
-
-Test manager
-- Martin
-
-Architecture manager
-- Lasse
-
-Developers
-- Lasse
-- Martin
-- Michael
