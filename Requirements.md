@@ -44,3 +44,19 @@ User Stories:
 
 - As a system I want a buffer for content when the site is down, so that I don't lose stuff.
 
+
+
+### Roles:
+Scrum master
+- Martin
+
+Test manager
+- Martin
+
+Architecture manager
+- Lasse
+
+Developers
+- Lasse
+- Martin
+- Michael
