@@ -44,7 +44,7 @@ To do:
 
 - As a User I want to be able to log in so that I can participate in discussions
 
-- As a User I want to be able to comments in discussions
+- As a User I want to be able to comment in discussions
 
 - As a User I want to be able to vote on comments
 
