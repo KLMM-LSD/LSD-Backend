@@ -107,8 +107,9 @@ To do:
 ### Database 
 	1. Setup Database (Probably SQL) 
 	2. Table for Discussions
-	3. Table for Users.
-	4. Database Connection, Accesser (Java)
+	3. Table for Users and Admins.
+	4. Table for Comments.
+	5. Database Connection, Accesser (Java)
 
 ### Additional
 	1. API for testing purpose (Specified more / Divided Into Additional Tasks)
