@@ -3,7 +3,7 @@ Product owner
 - Rolf-Helge Pfeiffer
 
 Scrum master
-- Martin Hansen
+- Michael Veilis
 
 Test manager
 - Martin Hansen
