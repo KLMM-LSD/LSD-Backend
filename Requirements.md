@@ -61,3 +61,38 @@ To do:
 - As a product owner I want the site deployed on a server, so that users can access my product.
 
 - As a system I want a buffer for content when the site is down, so that I don't lose stuff.
+
+
+
+## Tasks
+
+### Register User
+	1. Entity Mapping (Id, Name, Type, etc...)
+
+### Discussion
+	1. Discussion Entity 
+	2. Discussion Comments - as a field
+	3. Upvote or Downvote feature - as a field(requires login) 
+	4. Mark as spam feature
+
+### UI
+	1. Commenting on discussion (requires login) 
+	2. Overview (Frontpage) 
+	3. Log ing Page
+	4. Discussion View w. Comments
+	5. Sequrity?
+
+### Database 
+	1. Setup Database (Probably SQL) 
+	2. Table for Discussions
+	3. Table for Users.
+	4. Database Connection, Accesser (Java)
+
+### Additional
+	1. API for testing purpose (Specified more / Divided Into Additional Tasks)
+	2. Buffer system to hold data, while the system isn't responding
+	3. Deploy on Server. 
+
+
+
+
