@@ -1,20 +1,20 @@
 ### Roles:
 Product owner
-- Helge
+- Rolf-Helge Pfeiffer
 
 Scrum master
-- Martin
+- Martin Hansen
 
 Test manager
-- Martin
+- Martin Hansen
 
 Architecture manager
-- Lasse
+- Lasse Hansen
 
 Developers
-- Lasse
-- Martin
-- Michael
+- Lasse Hansen
+- Martin Hansen
+- Michael Veilis
 
 ### Hacker news, reddit like site Requirement:
 
