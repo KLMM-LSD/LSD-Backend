@@ -40,25 +40,41 @@ To do:
 	
 	
 ### User Stories:
-- As a user I want to be able to register so that I can use the features from the site
+- As a User I want to be able to register so that I can post new discussions aswell as comments
 
-- As a User I want to be able to log in so that I can participate in discussions
+- As a User I want to be able to log in so that I can use all the features on the site
 
-- As a User I want to be able to comment in discussions
+- As a User I want to be able to write discussions so people can comment and vote
 
-- As a User I want to be able to vote on comments
+- As a User I want to be able to see discussions so that I can see what the discussion is about
 
-- As a User I want to be able to vote on discussions
+- As a User I want to be able to click on discussions so that I can see what they are about
 
-- As a User I want to be able to mark as discussions as spam
+- As a User I want to be able to click on comments so that I can read them
+
+- As a User I want to be able to comment on posts so that I can participate in discussions
+
+- As a User I want to be able to vote on comments so that I can show my appriciation
+
+- As a User I want to be able to vote on discussions so that I can show my interest
+
+- As a User I want to be able to mark a discussion as spam so that meaningless discussions can be removed
+
+- As a User I want to be able to mark a comment as spam so that irrelevant comments can be removed
 
 - As a User I want an interface so that I can interact with the site
 
-- As an admin I want data to be stored in a database, so that I don't risk losing it. 
+- As an Admin I want a running server so that I can build an application
 
-- As an admin I want an API for testing purposes
+- As an Admin I want a running database so that I can save data
 
-- As a product owner I want the site deployed on a server, so that users can access my product.
+- As an Admin I want discussions to be stored in a database, so that I don't risk losing it.
+
+- As an Admin I want comments to be stored in a database, so that I don't risk losing it.
+
+- As an Admin I want an API for testing purposes
+
+- As an Admin I want the site deployed at all times on a server, so that users can access it.
 
 - As a system I want a buffer for content when the site is down, so that I don't lose stuff.
 
