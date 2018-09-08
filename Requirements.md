@@ -40,6 +40,7 @@ To do:
 	
 	
 ### User Stories:
+#### User
 - As a User I want to be able to register so that I can post new discussions aswell as comments
 
 - As a User I want to be able to log in so that I can use all the features on the site
@@ -64,6 +65,7 @@ To do:
 
 - As a User I want an interface so that I can interact with the site
 
+#### Admin
 - As an Admin I want a running server so that I can build an application
 
 - As an Admin I want a running database so that I can save data
