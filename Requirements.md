@@ -78,6 +78,8 @@ To do:
 
 - As an Admin I want an HTTP API for simulation so that I can test the application
 
+- As an Admin I want API access so that external programs can do statistics on the application
+
 - As an Admin I want the site deployed at all times on a server, so that users can access it
 
 - As a system I want a buffer for content when the site is down, so that I don't lose stuff
