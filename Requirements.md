@@ -24,7 +24,7 @@ Developers
 	4. Karma system, combined up and down vote points
 	5. Flag as spam feature
 	6. Web-application frontend. 
-	7. Backend - (Probably Python)
+	7. Backend
 	8. Database for storing users and discussions (including karma).
 	9. HTTP Api for simulator program that can post stories etc.
 	10. API access for external program to do statistics (Unspecified yet).
@@ -72,15 +72,15 @@ To do:
 
 - As an Admin I want a running database so that I can save data
 
-- As an Admin I want discussions to be stored in a database, so that I don't risk losing it.
+- As an Admin I want discussions to be stored in a database, so that I don't risk losing it
 
-- As an Admin I want comments to be stored in a database, so that I don't risk losing it.
+- As an Admin I want comments to be stored in a database, so that I don't risk losing it
 
-- As an Admin I want an API for testing purposes
+- As an Admin I want an HTTP API for simulation so that I can test the application
 
-- As an Admin I want the site deployed at all times on a server, so that users can access it.
+- As an Admin I want the site deployed at all times on a server, so that users can access it
 
-- As a system I want a buffer for content when the site is down, so that I don't lose stuff.
+- As a system I want a buffer for content when the site is down, so that I don't lose stuff
 
 
 
