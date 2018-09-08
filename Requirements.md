@@ -55,9 +55,11 @@ To do:
 
 - As a User I want to be able to comment on posts so that I can participate in discussions
 
-- As a User I want to be able to vote on comments so that I can show my appriciation
+- As a User I want to be able to vote on comments so that I can show my appriciation with karma
 
-- As a User I want to be able to vote on discussions so that I can show my interest
+- As a User I want to be able to vote on discussions so that I can show my interest with karma
+
+- As a User I want to be able to acquire karma points so that I can vote
 
 - As a User I want to be able to mark a discussion as spam so that meaningless discussions can be removed
 
