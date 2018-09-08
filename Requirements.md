@@ -41,48 +41,48 @@ To do:
 	
 ### User Stories:
 #### User
-- As a User I want to be able to register so that I can post new discussions aswell as comments
+- (U-01) As a User I want to be able to register so that I can post new discussions aswell as comments
 
-- As a User I want to be able to log in so that I can use all the features on the site
+- (U-02) As a User I want to be able to log in so that I can use all the features on the site
 
-- As a User I want to be able to write discussions so people can comment and vote
+- (U-03) As a User I want to be able to write discussions so people can comment and vote
 
-- As a User I want to be able to see discussions so that I can see what the discussion is about
+- (U-04) As a User I want to be able to see discussions so that I can see what the discussion is about
 
-- As a User I want to be able to click on discussions so that I can see what they are about
+- (U-05) As a User I want to be able to click on discussions so that I can see what they are about
 
-- As a User I want to be able to click on comments so that I can read them
+- (U-06) As a User I want to be able to click on comments so that I can read them
 
-- As a User I want to be able to comment on posts so that I can participate in discussions
+- (U-07) As a User I want to be able to comment on posts so that I can participate in discussions
 
-- As a User I want to be able to vote on comments so that I can show my appriciation with karma
+- (U-08) As a User I want to be able to vote on comments so that I can show my appriciation with karma
 
-- As a User I want to be able to vote on discussions so that I can show my interest with karma
+- (U-09) As a User I want to be able to vote on discussions so that I can show my interest with karma
 
-- As a User I want to be able to acquire karma points so that I can vote
+- (U-10) As a User I want to be able to acquire karma points so that I can vote
 
-- As a User I want to be able to mark a discussion as spam so that meaningless discussions can be removed
+- (U-11) As a User I want to be able to mark a discussion as spam so that meaningless discussions can be removed
 
-- As a User I want to be able to mark a comment as spam so that irrelevant comments can be removed
+- (U-12) As a User I want to be able to mark a comment as spam so that irrelevant comments can be removed
 
-- As a User I want an interface so that I can interact with the site
+- (U-13) As a User I want an interface so that I can interact with the site
 
 #### Admin
-- As an Admin I want a running server so that I can build an application
+- (A-01) As an Admin I want a running server so that I can build an application
 
-- As an Admin I want a running database so that I can save data
+- (A-02) As an Admin I want a running database so that I can save data
 
-- As an Admin I want discussions to be stored in a database, so that I don't risk losing it
+- (A-03) As an Admin I want discussions to be stored in a database, so that I don't risk losing it
 
-- As an Admin I want comments to be stored in a database, so that I don't risk losing it
+- (A-04) As an Admin I want comments to be stored in a database, so that I don't risk losing it
 
-- As an Admin I want an HTTP API for simulation so that I can test the application
+- (A-05) As an Admin I want an HTTP API for simulation so that I can test the application
 
-- As an Admin I want API access so that external programs can do statistics on the application
+- (A-06) As an Admin I want API access so that external programs can do statistics on the application
 
-- As an Admin I want the site deployed at all times on a server, so that users can access it
+- (A-07) As an Admin I want the site deployed at all times on a server, so that users can access it
 
-- As a system I want a buffer for content when the site is down, so that I don't lose stuff
+- (A-08) As a system I want a buffer for content when the site is down, so that I don't lose stuff
 
 
 
