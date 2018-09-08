@@ -78,7 +78,7 @@ To do:
 ### UI
 	1. Commenting on discussion (requires login) 
 	2. Overview (Frontpage) 
-	3. Log ing Page
+	3. Log in Page
 	4. Discussion View w. Comments
 	5. Sequrity?
 
