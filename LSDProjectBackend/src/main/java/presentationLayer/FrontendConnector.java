@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package redditHandler;
+package presentationLayer;
 
 /**
  *
  * @author Micha
  */
-public class Main {
+public class FrontendConnector {
     
 }
