@@ -1,14 +1,31 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package DBLayer;
 
-/**
- *
- * @author Micha
- */
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
 public class QueryFormer {
     
+    // Eksemple på at lave queries for User tabellen
+    
+    public static void viewUserTable(Connection con, String dbName) throws SQLException{
+        Statement stmt = null;
+        String query = "QUERY_EXAMPLE";
+        try{
+            stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery(query);
+            while (rs.next()) {
+                String userName = rs.getString("USER_NAME");
+                //....
+                System.out.println(userName + "\t");
+            }
+        } catch (SQLException e) {
+            System.out.println("Got an SQLException: " + e);
+        } finally {
+            if (stmt != null) {
+                stmt.close();
+            }
+        }
+    }
 }
