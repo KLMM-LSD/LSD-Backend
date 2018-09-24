@@ -14,14 +14,14 @@ import java.util.Date;
 public class Post {
     
     private int id;
-    private String type;
+    private int type;
     private int parentId;
-    private Date date;
+    private int date;
     private String content;
     private int userId;
     private int threadId;
 
-    public Post(String type, int parentId, Date date, String content, int userId, int threadId) {
+    public Post(int type, int parentId, int date, String content, int userId, int threadId) {
         this.type = type;
         this.parentId = parentId;
         this.date = date;
@@ -29,7 +29,6 @@ public class Post {
         this.userId = userId;
         this.threadId = threadId;
     }
-    
     
     
 }
