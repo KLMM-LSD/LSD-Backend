@@ -1,4 +1,5 @@
 language:java
 
 before_install:
-    cd LSDProjectBackend
+    #Change into directory where pom.xml is located
+    - cd LSDProjectBackend
