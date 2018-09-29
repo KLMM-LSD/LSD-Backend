@@ -1,5 +1,6 @@
 package DBLayer;
 
+import static com.sun.xml.internal.ws.dump.LoggingDumpTube.Position.Before;
 import entities.Users;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -9,8 +10,8 @@ import java.sql.Statement;
 
 public class QueryFormer {
 
-    private static final DatabaseAccess access = new DatabaseAccess();
-    private static final Connection connection = access.getConnection();
+    private static DatabaseAccess access;
+    private static Connection connection;
 
     // Eksemple på at lave queries for User tabellen
     public static void viewUserTable(Connection con, String dbName) throws SQLException {
@@ -31,6 +32,16 @@ public class QueryFormer {
                 stmt.close();
             }
         }
+    }
+
+    public void setUp() throws SQLException {
+        if (access == null) {
+            access = new DatabaseAccess();
+        }
+        if (connection == null) {
+            connection = access.getConnection();
+        }
+
     }
 
     public static void createUser(Connection con, String dbName, Users user) throws SQLException {
