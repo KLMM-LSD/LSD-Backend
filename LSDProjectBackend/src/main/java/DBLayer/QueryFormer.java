@@ -1,59 +1,36 @@
 package DBLayer;
 
-import static com.sun.xml.internal.ws.dump.LoggingDumpTube.Position.Before;
 import entities.Users;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 
 public class QueryFormer {
 
     private static DatabaseAccess access;
     private static Connection connection;
 
-    // Eksemple på at lave queries for User tabellen
-    public static void viewUserTable(Connection con, String dbName) throws SQLException {
-        Statement stmt = null;
-        String query = "QUERY_EXAMPLE";
-        try {
-            stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery(query);
-            while (rs.next()) {
-                String userName = rs.getString("USER_NAME");
-                //....
-                System.out.println(userName + "\t");
-            }
-        } catch (SQLException e) {
-            System.out.println("Got an SQLException: " + e);
-        } finally {
-            if (stmt != null) {
-                stmt.close();
-            }
-        }
-    }
-
-    public void setUp() throws SQLException {
+    public static void setUp() throws SQLException {
         if (access == null) {
             access = new DatabaseAccess();
         }
         if (connection == null) {
             connection = access.getConnection();
         }
-
     }
 
     public static void createUser(Connection con, String dbName, Users user) throws SQLException {
-        PreparedStatement pstmt = con.prepareStatement("INSERT INTO user (username, usertype ,userpassword) VALUES ( ?,?,?);");
+        PreparedStatement pstmt = con.prepareStatement("INSERT INTO users (username, usertype, usertimestamp, userpassword) VALUES (?,?,?,?)");
         pstmt.setString(1, user.getUsername());
         pstmt.setString(2, user.getUsertype());
-        pstmt.setString(3, user.getUserpassword());
+        pstmt.setLong(3, user.getUsertimestamp());
+        pstmt.setString(4, user.getUserpassword());
         pstmt.execute();
     }
 
     public static void main(String[] args) throws SQLException {
-        Users user = new Users("user", "Hans", "123");
+        setUp();
+        Users user = new Users("user", 0l, "Hans", "123");
         createUser(connection, "lsd", user);
     }
 }
