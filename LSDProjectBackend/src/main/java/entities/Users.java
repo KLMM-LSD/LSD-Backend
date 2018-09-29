@@ -63,7 +63,8 @@ public class Users implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "postauthorid")
     private Collection<Posts> postsCollection;
 
-    public Users() {
+    public Users(Long usertimestamp) {
+        this.usertimestamp = System.currentTimeMillis();
     }
 
     public Users(Integer userid) {

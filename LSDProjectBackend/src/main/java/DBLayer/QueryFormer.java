@@ -3,7 +3,9 @@ package DBLayer;
 import entities.Users;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 public class QueryFormer {
 
@@ -27,10 +29,24 @@ public class QueryFormer {
         pstmt.setString(4, user.getUserpassword());
         pstmt.execute();
     }
+    
+    public static Users getUser(Connection con, int userid) throws ClassNotFoundException, SQLException {
+        Users user = new Users(0L);
+        Statement stmt = con.createStatement();
+        String query = "SELECT * FROM users WHERE userid = " + userid + ";";
+        ResultSet rs = stmt.executeQuery(query);
+        while(rs.next()){
+            user.setUsertype(rs.getString(1));
+            user.setUsername(rs.getString(2));
+            user.setUserpassword(rs.getString(3));
+        }
+        return user;
+    }
 
-    public static void main(String[] args) throws SQLException {
+    public static void main(String[] args) throws SQLException, ClassNotFoundException {
         setUp();
-        Users user = new Users("user", 0l, "Hans", "123");
-        createUser(connection, "lsd", user);
+//        Users user = new Users("user", 0l, "Hans", "123");
+//        createUser(connection, "lsd", user);
+        getUser(connection, 1);
     }
 }
