@@ -78,6 +78,13 @@ public class Users implements Serializable {
         this.userpassword = userpassword;
     }
 
+    public Users(String usertype, String username, String userpassword) {
+        this.usertype = usertype;
+        this.usertimestamp = System.currentTimeMillis();
+        this.username = username;
+        this.userpassword = userpassword;
+    }
+
     public Integer getUserid() {
         return userid;
     }
@@ -168,5 +175,5 @@ public class Users implements Serializable {
     public String toString() {
         return "entities.Users[ userid=" + userid + " ]";
     }
-    
+
 }
