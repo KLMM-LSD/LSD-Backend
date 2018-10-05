@@ -78,6 +78,9 @@ public class Users implements Serializable {
         this.userpassword = userpassword;
     }
 
+    public Users() {
+    }
+
     public Integer getUserid() {
         return userid;
     }

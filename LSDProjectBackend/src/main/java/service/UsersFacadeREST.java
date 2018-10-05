@@ -5,9 +5,13 @@
  */
 package service;
 
+import DBLayer.UserQueries;
 import entities.Users;
+import java.sql.SQLException;
 import java.util.List;
 import javax.ejb.Stateless;
+import javax.json.Json;
+import javax.json.JsonObject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.ws.rs.Consumes;
@@ -18,6 +22,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import static javax.ws.rs.client.Entity.entity;
 import javax.ws.rs.core.MediaType;
 
 /**
@@ -29,6 +34,7 @@ import javax.ws.rs.core.MediaType;
 public class UsersFacadeREST extends AbstractFacade<Users> {
 
     @PersistenceContext(unitName = "com.mycompany_LSDProjBack_war_1.0-SNAPSHOTPU")
+    UserQueries uq = new UserQueries();
     private EntityManager em;
 
     public UsersFacadeREST() {
@@ -36,12 +42,12 @@ public class UsersFacadeREST extends AbstractFacade<Users> {
     }
 
     @POST
-    @Override
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public void create(Users entity) {
-        super.create(entity);
+    public void create(JsonObject js) {        
+        Users user = new Users();
+        //uq.createUser(entity); //Log her
     }
-
+  
     @PUT
     @Path("{id}")
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
@@ -87,5 +93,5 @@ public class UsersFacadeREST extends AbstractFacade<Users> {
     protected EntityManager getEntityManager() {
         return em;
     }
-    
+
 }
