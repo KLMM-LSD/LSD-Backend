@@ -6,6 +6,7 @@
 package service;
 
 import DBLayer.UserQueries;
+import com.google.gson.Gson;
 import entities.Users;
 import java.sql.SQLException;
 import java.util.List;
@@ -35,6 +36,7 @@ public class UsersFacadeREST extends AbstractFacade<Users> {
 
     @PersistenceContext(unitName = "com.mycompany_LSDProjBack_war_1.0-SNAPSHOTPU")
     UserQueries uq = new UserQueries();
+    Gson g = new Gson();
     private EntityManager em;
 
     public UsersFacadeREST() {
@@ -43,29 +45,35 @@ public class UsersFacadeREST extends AbstractFacade<Users> {
 
     @POST
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public void create(JsonObject js) {        
+    public void create(JsonObject js) throws SQLException {
         Users user = new Users();
+//        String str = g.toJson(user);
+        uq.createUser(user);
         //uq.createUser(entity); //Log her
     }
   
     @PUT
     @Path("{id}")
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public void edit(@PathParam("id") Integer id, Users entity) {
-        super.edit(entity);
+    public void edit(@PathParam("id") Integer id, Users entity) throws SQLException {
+        Users user = new Users();
+        uq.updateUser(user.getUserid(), user.getUserpassword());
     }
 
     @DELETE
     @Path("{id}")
-    public void remove(@PathParam("id") Integer id) {
-        super.remove(super.find(id));
+    public void remove(@PathParam("id") Integer id) throws SQLException {
+        Users user = new Users();
+        uq.deleteUser(user.getUserid());
     }
 
     @GET
     @Path("{id}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public Users find(@PathParam("id") Integer id) {
-        return super.find(id);
+    public Users find(@PathParam("id") Integer id) throws ClassNotFoundException, SQLException {
+        Users user = new Users();
+        uq.getUser(user.getUserid());
+        return user;
     }
 
     @GET

@@ -22,11 +22,13 @@ public class UserQueries {
     }
 
     public void createUser(Users user) throws SQLException {
-        PreparedStatement pstmt = connection.prepareStatement("INSERT INTO users (username, usertype, usertimestamp, userpassword) VALUES (?,?,?,?)");
-        pstmt.setString(1, user.getUsername());
-        pstmt.setString(2, user.getUsertype());
-        pstmt.setLong(3, user.getUsertimestamp());
-        pstmt.setString(4, user.getUserpassword());
+        PreparedStatement pstmt = connection.prepareStatement("INSERT INTO users (userid, username, usertype, usertimestamp, userpassword, userpassword) VALUES (?,?,?,?,?,?)");
+        pstmt.setInt(1, user.getUserid());
+        pstmt.setString(2, user.getUsername());
+        pstmt.setString(3, user.getUsertype());
+        pstmt.setLong(4, user.getUsertimestamp());
+        pstmt.setString(5, user.getUserpassword());
+        pstmt.setString(6, user.getUserabout());
         pstmt.execute();
     }
 
@@ -36,9 +38,11 @@ public class UserQueries {
         String query = "SELECT * FROM users WHERE userid = " + userid + ";";
         ResultSet rs = stmt.executeQuery(query);
         while (rs.next()) {
-            user.setUsertype(rs.getString(1));
-            user.setUsername(rs.getString(2));
-            user.setUserpassword(rs.getString(3));
+            user.setUserid(rs.getInt(1));
+            user.setUsertype(rs.getString(2));
+            user.setUsername(rs.getString(3));
+            user.setUserpassword(rs.getString(4));
+            user.setUserabout(rs.getString(5));
         }
         return user;
     }

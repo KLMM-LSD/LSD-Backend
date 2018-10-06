@@ -67,15 +67,17 @@ public class Users implements Serializable {
         this.usertimestamp = System.currentTimeMillis();
     }
 
-    public Users(Integer userid) {
-        this.userid = userid;
-    }
+//    public Users(Integer userid) {
+//        this.userid = userid;
+//    }
 
-    public Users(String usertype, Long usertimestamp, String username, String userpassword) {
+    public Users(Integer userid, String usertype, Long usertimestamp, String username, String userpassword, String userabout) {
+        this.userid = userid;
         this.usertype = usertype;
         this.usertimestamp = System.currentTimeMillis();
         this.username = username;
         this.userpassword = userpassword;
+        this.userabout = userabout;
     }
 
     public Users() {
