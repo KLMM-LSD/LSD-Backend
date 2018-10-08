@@ -21,6 +21,7 @@ public class UserQueries {
         }
     }
 
+    //Opret user i DB ud fra User objekt
     public void createUser(Users user) throws SQLException {
         PreparedStatement pstmt = connection.prepareStatement("INSERT INTO users (userid, username, usertype, usertimestamp, userpassword, userpassword) VALUES (?,?,?,?,?,?)");
         pstmt.setInt(1, user.getUserid());
@@ -32,6 +33,7 @@ public class UserQueries {
         pstmt.execute();
     }
 
+    // Get User object ud fra Id
     public Users getUser(int userid) throws ClassNotFoundException, SQLException {
         Users user = new Users(0L);
         Statement stmt = connection.createStatement();
@@ -47,16 +49,29 @@ public class UserQueries {
         return user;
     }
 
+    // Indtil videre kan man update password, hvis nødvendigt. Den kan udvides til, at kunne opdatere flere felter. 
     public void updateUser(int userid, String password) throws SQLException {
         PreparedStatement pstmt = connection.prepareStatement("UPDATE Users SET userpassword = ? WHERE userid = " + userid + ";");
         pstmt.setString(1, password);
         pstmt.execute();
     }
 
+    // Deletes user baseret på givet ID
     public void deleteUser(int userid) throws SQLException {
         PreparedStatement pstmt = connection.prepareStatement("DELETE FROM Users WHERE userid = ?");
         pstmt.setInt(1, userid);
         pstmt.execute();
+    }
+
+    public int getUserIdByName(String name) throws SQLException {
+        Statement stmt = connection.createStatement();
+        String query = "SELECT userid FROM users WHERE username = " + name + ";";
+        ResultSet rs = stmt.executeQuery(query);
+        if (rs.next()) {
+            return rs.getInt("userid");
+        } else {
+            return -1; // Username eksisterer ikke i DB. 
+        }
     }
 
 }
