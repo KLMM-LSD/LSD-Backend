@@ -25,7 +25,7 @@ import javax.ws.rs.core.MediaType;
  * @author Micha
  */
 @Stateless
-@Path("entities.posts")
+@Path("/posts")
 public class PostsFacadeREST extends AbstractFacade<Posts> {
 
     @PersistenceContext(unitName = "com.mycompany_LSDProjBack_war_1.0-SNAPSHOTPU")
@@ -39,7 +39,7 @@ public class PostsFacadeREST extends AbstractFacade<Posts> {
     @Override
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public void create(Posts entity) {
-        
+        /* TODO: wrapper entity */
     }
 
     @PUT

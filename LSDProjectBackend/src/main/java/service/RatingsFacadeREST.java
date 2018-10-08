@@ -39,7 +39,7 @@ public class RatingsFacadeREST extends AbstractFacade<Ratings> {
     @Override
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public void create(Ratings entity) {
-        super.create(entity);
+        /*wrapper*/
     }
 
     @PUT

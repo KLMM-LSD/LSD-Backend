@@ -30,9 +30,8 @@ public class PostQueries {
             connection = access.getConnection();
         }
     }
-    
-    
 
+    // Måske postThreadID
     public void createPost(JsonObject js) throws SQLException{
     
         PreparedStatement pstmt = connection.prepareStatement("INSERT INTO posts (posttype, parentid, posttimestamp, postauthorid, postcontent) "
@@ -43,6 +42,10 @@ public class PostQueries {
         pstmt.setString(4, js.getString("username"));
         pstmt.setString(5, js.getString("post_text"));        
         pstmt.execute();
+    }
+    
+    public void updatePost(JsonObject js) {
+//        PreparedStatement pstmt
     }
     
     public List<Posts> userPosts(int userid) {

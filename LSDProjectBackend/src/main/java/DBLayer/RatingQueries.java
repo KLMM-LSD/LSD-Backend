@@ -26,16 +26,13 @@ public class RatingQueries {
         }
     }
 
-    public int getTotalCommentRating(int userid) {
-        return 0;
-    }
-
-    public int getTotalDiscussionRating(int userid) {
+    /* COUNT upvotes, count DOWN, evt- sum */
+    public int getTotalPostRating(int postid) {
         return 0;
     }
     
-    //Giv Points +/-
-    public void vote(){
+    /* try to submuit vote */
+    public void submitvote(){
     
     }
 

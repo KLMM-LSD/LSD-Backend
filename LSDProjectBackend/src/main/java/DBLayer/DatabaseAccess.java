@@ -8,15 +8,16 @@ import javax.naming.NamingException;
 
 public class DatabaseAccess {
 
+    
+    private static final String CONNECTION_STRING = "jdbc:mysql://localhost:3360/lsd?zeroDateTimeBehaviour=convertToNull&serverTimezone=UTC";
+    private static final String AUTH_USERNAME = "root";
+    private static final String AUTH_PASSWORD = "root";
+    
     MysqlDataSource dataSource;
     Connection conn;
 
     public DatabaseAccess() throws SQLException {
-        String URL = "jdbc:mysql://localhost:3360/lsd?zeroDateTimeBehaviour=convertToNull&serverTimezone=UTC";
-        String user = "root";
-        String password = "root";
-        
-        conn = DriverManager.getConnection(URL, user, password);
+        conn = DriverManager.getConnection(CONNECTION_STRING, AUTH_USERNAME, AUTH_PASSWORD);
     }
 
     public Connection getConnection() throws SQLException {
@@ -28,14 +29,10 @@ public class DatabaseAccess {
         }
     }
 
-// Option 2 Nyere måde at gøre det på
     public static void main(String[] args) throws NamingException, SQLException {
         Connection conn = null;
-        String URL = "jdbc:mysql://localhost:3360/lsd?zeroDateTimeBehaviour=convertToNull&serverTimezone=UTC";
-        String user = "root";
-        String password = "root";
         
-        conn = DriverManager.getConnection(URL, user, password);
+        conn = DriverManager.getConnection(CONNECTION_STRING, AUTH_USERNAME, AUTH_PASSWORD);
         if (conn != null) {
             System.out.println("Connected");
         }
