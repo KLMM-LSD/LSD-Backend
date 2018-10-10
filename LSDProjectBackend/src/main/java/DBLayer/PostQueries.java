@@ -34,7 +34,7 @@ public class PostQueries {
 
     // Måske postThreadID
     public void createPost(JsonObject js) throws SQLException{
-    
+
         PreparedStatement pstmt = connection.prepareStatement("INSERT INTO posts (posttype, parentid, posttimestamp, postauthorid, postcontent) "
                 + "VALUES (?,?,?,?,?)"); 
         pstmt.setString(1, js.getString("post_type"));

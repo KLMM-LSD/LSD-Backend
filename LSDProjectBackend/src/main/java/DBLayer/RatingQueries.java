@@ -33,14 +33,15 @@ public class RatingQueries {
 		pstmt.setInt(1, postid);
 		ResultSet rs = pstmt.executeQuery();
 		if(!rs.next()){
-			//Post has no votes, which is normal.
+			return 0;
 		}
-		return rs.getInt(1);
+		return rs.getInt("sumratings");
     }
     
     /* try to submuit vote */
     public void submitvote(int userid, int postid, int ratingvalue){
-		PreparedStatement pstmt = connection.prepareStatement("INSERT INTO ratings VALUES (?,
+		PreparedStatement pstmt = connection.prepareStatement("INSERT INTO ratings (ratingauthorid, ratingpostid, ratingvalue) VALUES (?, ?, ?);")
+		PreparedStatement 
     }
 
 }
