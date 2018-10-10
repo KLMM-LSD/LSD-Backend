@@ -9,6 +9,7 @@ import entities.Posts;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 import javax.json.JsonObject;
@@ -44,12 +45,28 @@ public class PostQueries {
         pstmt.execute();
     }
     
-    public void updatePost(JsonObject js) {
-//        PreparedStatement pstmt
+	// Skal timestamp opdateres for at reflektere redigeringstidspunktet? 
+    public void updatePost(JsonObject js) throws SQLException {
+        PreparedStatement pstmt = connection.prepareStatement( "UPDATE posts SET post_text = ?"
+			+ "WHERE postid = ?;");
+		pstmt.setString(1, js.getString("post_text"));
+		pstmt.setInt(2, js.getInt("post_id"));
+		pstmt.execute();
     }
     
-    public List<Posts> userPosts(int userid) {
-        List<Posts> posts = new ArrayList();
+    public List<Posts> userPosts(int userid) throws SQLException {
+        PreparedStatement pstmt = connection.prepareStatement("SELECT postid, posttype, posttimestamp, postcontent FROM posts WHERE postauthorid = ?");
+		pstmt.setInt(1, userid);
+		List<Posts> posts = new ArrayList();
+		ResultSet rs = pstmt.executeQuery();
+		if(!rs.next()){
+			//Users may have no posts, so this is not an issue
+		} else{
+			do{
+				posts.add(new Posts(rs.getInt("postid"), rs.getString("posttype"), rs.getLong("posttimestamp"), rs.getString("postcontent")));
+			} 	while(rs.next());
+		}
+	
         return posts;
     }
     

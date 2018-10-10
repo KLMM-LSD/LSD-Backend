@@ -7,7 +7,8 @@ package DBLayer;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 /**
  *
  * @author Mart_
@@ -27,13 +28,19 @@ public class RatingQueries {
     }
 
     /* COUNT upvotes, count DOWN, evt- sum */
-    public int getTotalPostRating(int postid) {
-        return 0;
+    public int getTotalPostRating(int postid) throws SQLException {
+        PreparedStatement pstmt = connection.prepareStatement("SELECT SUM(ratingvalue) AS sumratings FROM lsd.ratings WHERE ratingpostid = ? LIMIT 1;");
+		pstmt.setInt(1, postid);
+		ResultSet rs = pstmt.executeQuery();
+		if(!rs.next()){
+			//Post has no votes, which is normal.
+		}
+		return rs.getInt(1);
     }
     
     /* try to submuit vote */
-    public void submitvote(){
-    
+    public void submitvote(int userid, int postid, int ratingvalue){
+		PreparedStatement pstmt = connection.prepareStatement("INSERT INTO ratings VALUES (?,
     }
 
 }
