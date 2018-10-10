@@ -23,7 +23,7 @@ public class UserQueries {
 
     //Opret user i DB ud fra User objekt
     public void createUser(Users user) throws SQLException {
-        PreparedStatement pstmt = connection.prepareStatement("INSERT INTO users (userid, username, usertype, usertimestamp, userpassword, userpassword) VALUES (?,?,?,?,?,?)");
+        PreparedStatement pstmt = connection.prepareStatement("INSERT INTO users (userid, username, usertype, usertimestamp, userpassword, userabout) VALUES (?,?,?,?,?,?)");
         pstmt.setInt(1, user.getUserid());
         pstmt.setString(2, user.getUsername());
         pstmt.setString(3, user.getUsertype());
@@ -42,9 +42,9 @@ public class UserQueries {
         while (rs.next()) {
             user.setUserid(rs.getInt(1));
             user.setUsertype(rs.getString(2));
-            user.setUsername(rs.getString(3));
-            user.setUserpassword(rs.getString(4));
-            user.setUserabout(rs.getString(5));
+            user.setUsername(rs.getString(4));
+            user.setUserpassword(rs.getString(5));
+            user.setUserabout(rs.getString(6));
         }
         return user;
     }
@@ -72,6 +72,17 @@ public class UserQueries {
         } else {
             return -1; // Username eksisterer ikke i DB. 
         }
+    }
+
+    public int sumOfUsers() throws SQLException {
+        int count = 0;
+        Statement stmt = connection.createStatement();
+        String query = "SELECT * FROM users;";
+        ResultSet rs = stmt.executeQuery(query);
+        while (rs.next()) {
+            count++;
+        }
+        return count;
     }
 
 }
