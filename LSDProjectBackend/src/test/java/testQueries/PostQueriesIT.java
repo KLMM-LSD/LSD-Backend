@@ -36,8 +36,6 @@ public class PostQueriesIT {
     public static void setUpClass() throws SQLException {
    
     pq = new PostQueries();
-    PostQueries.setUp();
-    
     testUser = new Users(1001, "user", System.currentTimeMillis(), "AuthorGuy", "123", "Witty and Clever guy");
     testPost = new Posts(9919, "story",3,System.currentTimeMillis(),2,"How Mirrors Be Real, If Our Eyes Aren't? - Jaden Smith");
     

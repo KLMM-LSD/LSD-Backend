@@ -45,8 +45,16 @@ public class PostResource {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Posts postPost(Posts post) throws SQLException {
+    public void postPost(JsonObject js) throws SQLException {
         PostQueries postQ = new PostQueries();
-        return postQ.createPost(post);
+        postQ.setUp();
+        Posts post = new Posts();
+        post.setPostid(js.getInt("postid"));
+        post.setPosttype(js.getString("posttype"));
+        post.setPostparentid(js.getInt("postparentid"));
+        post.setPosttimestamp(System.currentTimeMillis());
+        post.setPostauthorid(js.getInt("postauthorid"));
+        post.setPostcontent(js.getString("postcontent"));
+        postQ.createPost(post);
     }
 }

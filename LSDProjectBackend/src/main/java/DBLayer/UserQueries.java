@@ -6,18 +6,25 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.annotation.PostConstruct;
 
 public class UserQueries {
 
     private DatabaseAccess access;
     private Connection connection;
 
-    public void setUp() throws SQLException {
+    public void setUp() {
         if (access == null) {
             access = new DatabaseAccess();
         }
         if (connection == null) {
-            connection = access.getConnection();
+            try {
+                connection = access.getConnection();
+            } catch (SQLException ex) {
+                Logger.getLogger(UserQueries.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
 

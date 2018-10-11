@@ -11,7 +11,7 @@ import java.sql.SQLException;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import org.junit.BeforeClass;
-import org.junit.Ignore;
+import org.junit.Test;
 
 /**
  *
@@ -38,7 +38,7 @@ public class UserQueriesTest {
         uq.deleteUser(1000);
     }
 
-    @Ignore
+    @Test
     public void CreateUserTest() throws SQLException {
         int size = uq.sumOfUsers();
         uq.createUser(testUser);
@@ -46,7 +46,7 @@ public class UserQueriesTest {
         assertTrue(size < uq.sumOfUsers());
     }
 
-    @Ignore
+    @Test
     public void DeleteUserTest() throws SQLException, ClassNotFoundException {
         uq.createUser(new Users(1000, "user", System.currentTimeMillis(), "TesterPerson", "testPWD", "Cool Guy"));
         testUser2 = uq.getUser(1000);

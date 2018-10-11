@@ -13,6 +13,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.annotation.PostConstruct;
 import javax.json.JsonObject;
 
 /**
@@ -24,20 +27,25 @@ public class PostQueries {
     private static DatabaseAccess access;
     private static Connection connection;
 
-    public static void setUp() throws SQLException {
+    public void setUp()  {
         if (access == null) {
             access = new DatabaseAccess();
         }
         if (connection == null) {
-            connection = access.getConnection();
+            try {
+                connection = access.getConnection();
+            } catch (SQLException ex) {
+                Logger.getLogger(PostQueries.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
 
-    // Måske postThreadID
+    
+    // Måske postThreadId
     public Posts createPost(Posts post) throws SQLException {
         Posts p = new Posts();
         PreparedStatement pstmt = connection.prepareStatement("INSERT INTO posts (postid, posttype, postparentid, posttimestamp, postauthorid, postcontent)"
-                + "VALUES (?,?,?,?,?,?)");
+                + "VALUES (?,?,?,?,?,?);");
         pstmt.setInt(1, p.getPostid());
         pstmt.setString(2, p.getPosttype());
         pstmt.setInt(3, p.getPostauthorid());
