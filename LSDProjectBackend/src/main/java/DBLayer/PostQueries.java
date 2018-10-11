@@ -24,10 +24,10 @@ import javax.json.JsonObject;
  */
 public class PostQueries {
 
-    private static DatabaseAccess access;
-    private static Connection connection;
+    private DatabaseAccess access;
+    private Connection connection;
 
-    public void setUp()  {
+    public void setUp() {
         if (access == null) {
             access = new DatabaseAccess();
         }
@@ -35,15 +35,17 @@ public class PostQueries {
             try {
                 connection = access.getConnection();
             } catch (SQLException ex) {
-                Logger.getLogger(PostQueries.class.getName()).log(Level.SEVERE, null, ex);
+                System.out.println("Men Der sket en fejl");
+                Logger.getLogger(UserQueries.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
 
-    
     // Måske postThreadId
     public Posts createPost(Posts post) throws SQLException {
+        System.out.println("Nu Laver jeg en post");
         Posts p = new Posts();
+        setUp();
         PreparedStatement pstmt = connection.prepareStatement("INSERT INTO posts (postid, posttype, postparentid, posttimestamp, postauthorid, postcontent)"
                 + "VALUES (?,?,?,?,?,?);");
         pstmt.setInt(1, p.getPostid());
@@ -51,7 +53,7 @@ public class PostQueries {
         pstmt.setInt(3, p.getPostauthorid());
         pstmt.setLong(4, System.currentTimeMillis());
         pstmt.setInt(5, p.getPostauthorid());
-        pstmt.setString(6,p.getPostcontent());
+        pstmt.setString(6, p.getPostcontent());
         pstmt.execute();
         return post;
     }

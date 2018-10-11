@@ -30,7 +30,7 @@ public class UserQueries {
 
     //Opret user i DB ud fra User objekt
     public void createUser(Users user) throws SQLException {
-        PreparedStatement pstmt = connection.prepareStatement("INSERT INTO users (userid, username, usertype, usertimestamp, userpassword, userabout) VALUES (?,?,?,?,?,?)");
+        PreparedStatement pstmt = DatabaseAccess.getConnection().prepareStatement("INSERT INTO users (userid, username, usertype, usertimestamp, userpassword, userabout) VALUES (?,?,?,?,?,?)");
         pstmt.setInt(1, user.getUserid());
         pstmt.setString(2, user.getUsername());
         pstmt.setString(3, user.getUsertype());
