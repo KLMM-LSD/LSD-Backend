@@ -36,12 +36,14 @@ public class PostQueries {
     // Måske postThreadID
     public Posts createPost(Posts post) throws SQLException {
         Posts p = new Posts();
-        PreparedStatement pstmt = connection.prepareStatement("INSERT INTO posts (posttype, posttimestamp, postcontent) "
-                + "VALUES (?,?,?)");
-        pstmt.setString(1, p.getPosttype());
-        pstmt.setInt(2, p.getPostparentid());
-        pstmt.setLong(2, System.currentTimeMillis());
-        pstmt.setString(3, p.getPostcontent());
+        PreparedStatement pstmt = connection.prepareStatement("INSERT INTO posts (postid, posttype, postparentid, posttimestamp, postauthorid, postcontent)"
+                + "VALUES (?,?,?,?,?,?)");
+        pstmt.setInt(1, p.getPostid());
+        pstmt.setString(2, p.getPosttype());
+        pstmt.setInt(3, p.getPostauthorid());
+        pstmt.setLong(4, System.currentTimeMillis());
+        pstmt.setInt(5, p.getPostauthorid());
+        pstmt.setString(6,p.getPostcontent());
         pstmt.execute();
         return post;
     }
