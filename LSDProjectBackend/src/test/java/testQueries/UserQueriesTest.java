@@ -5,41 +5,54 @@
  */
 package testQueries;
 
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
+import DBLayer.UserQueries;
+import entities.Users;
+import java.sql.SQLException;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 import org.junit.BeforeClass;
-import org.junit.Test;
-import static org.junit.Assert.*;
+import org.junit.Ignore;
 
 /**
  *
  * @author Micha
  */
 public class UserQueriesTest {
-    
+
+    private static UserQueries uq;
+    private static Users testUser;
+    private static Users testUser2;
+
     public UserQueriesTest() {
-    }
-    
-    @BeforeClass
-    public static void setUpClass() {
-    }
-    
-    @AfterClass
-    public static void tearDownClass() {
-    }
-    
-    @Before
-    public void setUp() {
-    }
-    
-    @After
-    public void tearDown() {
+
     }
 
-    // TODO add test methods here.
-    // The methods must be annotated with annotation @Test. For example:
-    //
-    // @Test
-    // public void hello() {}
+    @BeforeClass
+    public static void setUpClass() throws SQLException {
+        uq = new UserQueries();
+        uq.setUp();
+        testUser = new Users(999, "user", System.currentTimeMillis(), "TestPerson", "testPWD", "Cool Guy");
+        testUser2 = new Users(1000, "user", System.currentTimeMillis(), "TestPerson2", "testPWD", "Cool Guy");
+        
+        uq.deleteUser(999);
+        uq.deleteUser(1000);
+    }
+
+    @Ignore
+    public void CreateUserTest() throws SQLException {
+        int size = uq.sumOfUsers();
+        uq.createUser(testUser);
+        System.out.println("First Name: " + testUser.getUsername());
+        assertTrue(size < uq.sumOfUsers());
+    }
+
+    @Ignore
+    public void DeleteUserTest() throws SQLException, ClassNotFoundException {
+        uq.createUser(new Users(1000, "user", System.currentTimeMillis(), "TesterPerson", "testPWD", "Cool Guy"));
+        testUser2 = uq.getUser(1000);
+        assertTrue(testUser2.getUsername().equals("TesterPerson"));
+        uq.deleteUser(1000);
+        testUser2 = uq.getUser(1000);
+        assertNull(testUser2.getUsername());
+    }
 }
