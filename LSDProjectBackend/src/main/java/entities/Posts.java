@@ -59,7 +59,7 @@ public class Posts implements Serializable {
     private Collection<Posts> postsCollection;
     @JoinColumn(name = "postparentid", referencedColumnName = "postid")
     @ManyToOne
-    private Posts postparentid;
+    private int postparentid;
     @OneToMany(mappedBy = "postthreadid")
     private Collection<Posts> postsCollection1;
     @JoinColumn(name = "postthreadid", referencedColumnName = "postid")
@@ -139,11 +139,11 @@ public class Posts implements Serializable {
         this.postsCollection = postsCollection;
     }
 
-    public Posts getPostparentid() {
+    public int getPostparentid() {
         return postparentid;
     }
 
-    public void setPostparentid(Posts postparentid) {
+    public void setPostparentid(int postparentid) {
         this.postparentid = postparentid;
     }
 
