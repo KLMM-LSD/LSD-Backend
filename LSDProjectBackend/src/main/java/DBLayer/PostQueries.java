@@ -32,16 +32,16 @@ public class PostQueries {
     }
 
     // Måske postThreadID
-    public void createPost(JsonObject js) throws SQLException{
-    
-        PreparedStatement pstmt = connection.prepareStatement("INSERT INTO posts (posttype, parentid, posttimestamp, postauthorid, postcontent) "
-                + "VALUES (?,?,?,?,?)"); 
-        pstmt.setString(1, js.getString("post_type"));
-        pstmt.setInt(2, js.getInt("post_parent"));
-        pstmt.setLong(3, System.currentTimeMillis());
-        pstmt.setString(4, js.getString("username"));
-        pstmt.setString(5, js.getString("post_text"));        
+    public Posts createPost(Posts post) throws SQLException{
+        Posts p = new Posts();
+        PreparedStatement pstmt = connection.prepareStatement("INSERT INTO posts (posttype, posttimestamp, postcontent) "
+                + "VALUES (?,?,?)"); 
+        pstmt.setString(1, p.getPosttype());
+//        pstmt.setInt(2, p.getPostparentid());
+        pstmt.setLong(2, System.currentTimeMillis());
+        pstmt.setString(3, p.getPostcontent());
         pstmt.execute();
+        return post;
     }
     
     public void updatePost(JsonObject js) {
