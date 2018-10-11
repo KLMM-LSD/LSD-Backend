@@ -67,7 +67,7 @@ public class Posts implements Serializable {
     private Posts postthreadid;
     @JoinColumn(name = "postauthorid", referencedColumnName = "userid")
     @ManyToOne(optional = false)
-    private Users postauthorid;
+    private int postauthorid;
 
     public Posts() {
     }
@@ -76,10 +76,12 @@ public class Posts implements Serializable {
         this.postid = postid;
     }
 
-    public Posts(Integer postid, String posttype, long posttimestamp, String postcontent) {
+    public Posts(Integer postid, String posttype,int postparentid, long posttimestamp, int postauthorid, String postcontent) {
         this.postid = postid;
         this.posttype = posttype;
+        this.postparentid = postparentid;
         this.posttimestamp = posttimestamp;
+        this.postauthorid = postauthorid;
         this.postcontent = postcontent;
     }
 
@@ -164,11 +166,11 @@ public class Posts implements Serializable {
         this.postthreadid = postthreadid;
     }
 
-    public Users getPostauthorid() {
+    public int getPostauthorid() {
         return postauthorid;
     }
 
-    public void setPostauthorid(Users postauthorid) {
+    public void setPostauthorid(int postauthorid) {
         this.postauthorid = postauthorid;
     }
 
