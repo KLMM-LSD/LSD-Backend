@@ -39,9 +39,12 @@ public class RatingQueries {
     }
     
     /* try to submuit vote */
-    public void submitvote(int userid, int postid, int ratingvalue){
-		PreparedStatement pstmt = connection.prepareStatement("INSERT INTO ratings (ratingauthorid, ratingpostid, ratingvalue) VALUES (?, ?, ?);")
-		PreparedStatement 
+    public void submitvote(int userid, int postid, int ratingvalue) throws SQLException {
+		PreparedStatement pstmt = connection.prepareStatement("INSERT INTO ratings (ratingauthorid, ratingpostid, ratingvalue) VALUES (?, ?, ?);");
+		pstmt.setInt(1, userid);
+		pstmt.setInt(2, postid);
+		pstmt.setInt(3, ratingvalue);
+		pstmt.executeUpdate();
     }
 
 }
