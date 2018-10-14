@@ -63,7 +63,25 @@ public class PostQueries {
 			//Users may have no posts, so this is not an issue
 		} else{
 			do{
+				Posts post = new Posts(rs.getInt("postid"), rs.getString("posttype"), rs.getLong("posttimestamp"), rs.getString("postcontent"));
+				posts.add(post);     
+			} 	while(rs.next());
+		}
+	
+        return posts;
+    }
+	
+	public List<Posts> postChildren(int postid) throws SQLException {
+        PreparedStatement pstmt = connection.prepareStatement("SELECT postid, posttype, posttimestamp, postcontent FROM posts WHERE postparentid = ?");
+		pstmt.setInt(1, postid);
+		List<Posts> posts = new ArrayList();
+		ResultSet rs = pstmt.executeQuery();
+		if(!rs.next()){
+			//Posts may have no children
+		} else{
+			do{
 				posts.add(new Posts(rs.getInt("postid"), rs.getString("posttype"), rs.getLong("posttimestamp"), rs.getString("postcontent")));
+				//Set postparentid here. (Should be postparent?)
 			} 	while(rs.next());
 		}
 	
