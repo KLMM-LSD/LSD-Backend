@@ -36,6 +36,7 @@ public class PostQueriesIT {
     public static void setUpClass() throws SQLException {
    
     pq = new PostQueries();
+    pq.setUp();
     testUser = new Users(1001, "user", System.currentTimeMillis(), "AuthorGuy", "123", "Witty and Clever guy");
     testPost = new Posts(9919, "story",3,System.currentTimeMillis(),2,"How Mirrors Be Real, If Our Eyes Aren't? - Jaden Smith");
     
@@ -56,7 +57,7 @@ public class PostQueriesIT {
         int sumOfPosts = pq.sumOfPosts();
         pq.createPost(testPost);
         System.out.println(sumOfPosts);
-        assertTrue(sumOfPosts > /*pq.sumOfPosts()*/ 0);
+        assertTrue(sumOfPosts > /*pq.sumOfPosts()*/ pq.sumOfPosts());
         
     }
     

@@ -7,29 +7,27 @@ import java.sql.SQLException;
 import javax.naming.NamingException;
 
 public class DatabaseAccess {
+	private static final String CONNECTION_STRING = "jdbc:mysql://localhost:3306/lsd?zeroDateTimeBehaviour=convertToNull&serverTimezone=UTC";
+	private static final String AUTH_USERNAME = "root";
+	private static final String AUTH_PASSWORD = "root";
 
-    
-    private static final String CONNECTION_STRING = "jdbc:mysql://localhost:3360/lsd?zeroDateTimeBehaviour=convertToNull&serverTimezone=UTC";
-    private static final String AUTH_USERNAME = "root";
-    private static final String AUTH_PASSWORD = "root";
-    
-    MysqlDataSource dataSource;
-    Connection conn;
+	static MysqlDataSource dataSource;
+	static Connection conn;
 
-    public DatabaseAccess() throws SQLException, ClassNotFoundException {
-        Class.forName("com.mysql.jdbc.Driver");
-        conn = DriverManager.getConnection(CONNECTION_STRING, AUTH_USERNAME, AUTH_PASSWORD);
-    }
+	public DatabaseAccess() throws SQLException {
+		conn = DriverManager.getConnection(CONNECTION_STRING, AUTH_USERNAME, AUTH_PASSWORD);
+	}
 
-    public Connection getConnection() throws SQLException {
-        if (conn != null) {
-            return conn;
-        } else {
-            conn  = dataSource.getConnection();
-            return conn;
-        }
-    }
+	public static Connection getConnection() throws SQLException {
+		if (conn != null) {
+			return conn;
+		} else {
+			conn = dataSource.getConnection();
+			return conn;
+		}
+	}
 
+	/*
     public static void main(String[] args) throws NamingException, SQLException {
         Connection conn = null;
         
@@ -38,5 +36,9 @@ public class DatabaseAccess {
             System.out.println("Connected");
         }
     }
+	 */
+	public static void main() {
+		System.out.println("hey");
+	}
 
 }

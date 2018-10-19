@@ -5,8 +5,8 @@
  */
 package service;
 
-import DBLayer.PostQueries;
-import entities.Posts;
+import DBLayer.UserQueries;
+import entities.Users;
 import java.sql.SQLException;
 import javax.json.JsonObject;
 import javax.ws.rs.core.Context;
@@ -23,8 +23,8 @@ import javax.ws.rs.core.MediaType;
  *
  * @author Micha
  */
-@Path("/posts")
-public class PostResource {
+@Path("/users")
+public class UserResource {
     
     @Context
     private UriInfo context;
@@ -32,12 +32,12 @@ public class PostResource {
     /**
      * Creates a new instance of PostResource
      */
-    public PostResource() {
+    public UserResource() {
     }
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public String getPost() {
+    public String getUser() {
         String b = "Hello there!";
         return b;
     }
@@ -45,15 +45,15 @@ public class PostResource {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public void postPost(JsonObject js) throws SQLException, ClassNotFoundException {
-        PostQueries postQ = new PostQueries();
-        Posts post = new Posts();
-        post.setPostid(js.getInt("postid"));
-        post.setPosttype(js.getString("posttype"));
-        post.setPostparentid(js.getInt("postparentid"));
-        post.setPosttimestamp(System.currentTimeMillis());
-        post.setPostauthorid(js.getInt("postauthorid"));
-        post.setPostcontent(js.getString("postcontent"));
-        postQ.createPost(post);
+    public void postUser(JsonObject js) throws SQLException {
+        UserQueries postQ = new UserQueries();
+        Users user = new Users();
+        user.setUserid(js.getInt("userid"));
+        user.setUsername(js.getString("username"));
+        user.setUsertype(js.getString("usertype"));
+        user.setUsertimestamp(System.currentTimeMillis());
+        user.setUserpassword(js.getString("userpassword"));
+        user.setUserabout(js.getString("userabout"));
+        postQ.createUser(user);
     }
 }
