@@ -15,7 +15,7 @@ public class UserQueries {
     private DatabaseAccess access;
     private Connection connection;
 
-    public void setUp() {
+    public void setUp() throws SQLException, ClassNotFoundException {
         if (access == null) {
             access = new DatabaseAccess();
         }

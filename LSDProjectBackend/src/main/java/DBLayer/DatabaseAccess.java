@@ -16,7 +16,8 @@ public class DatabaseAccess {
     MysqlDataSource dataSource;
     Connection conn;
 
-    public DatabaseAccess() throws SQLException {
+    public DatabaseAccess() throws SQLException, ClassNotFoundException {
+        Class.forName("com.mysql.jdbc.Driver");
         conn = DriverManager.getConnection(CONNECTION_STRING, AUTH_USERNAME, AUTH_PASSWORD);
     }
 

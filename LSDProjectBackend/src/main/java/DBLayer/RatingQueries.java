@@ -17,7 +17,7 @@ public class RatingQueries {
     private static DatabaseAccess access;
     private static Connection connection;
 
-    public static void setUp() throws SQLException {
+    public static void setUp() throws SQLException, ClassNotFoundException {
         if (access == null) {
             access = new DatabaseAccess();
         }

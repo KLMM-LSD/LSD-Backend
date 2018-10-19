@@ -45,7 +45,7 @@ public class PostResource {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public void postPost(JsonObject js) throws SQLException {
+    public void postPost(JsonObject js) throws SQLException, ClassNotFoundException {
         PostQueries postQ = new PostQueries();
         postQ.setUp();
         Posts post = new Posts();

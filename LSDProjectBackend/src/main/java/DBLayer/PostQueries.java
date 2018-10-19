@@ -27,7 +27,7 @@ public class PostQueries {
     private static DatabaseAccess access;
     private static Connection connection;
 
-    public void setUp()  {
+    public void setUp() throws SQLException, ClassNotFoundException  {
         if (access == null) {
             access = new DatabaseAccess();
         }
