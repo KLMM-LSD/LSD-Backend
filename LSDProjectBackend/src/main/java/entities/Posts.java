@@ -85,7 +85,7 @@ public class Posts implements Serializable {
         this.postcontent = postcontent;
     }
 
-        public Posts(String posttype, long posttimestamp, String postcontent) {
+    public Posts(String posttype, long posttimestamp, String postcontent) {
         this.posttype = posttype;
         this.posttimestamp = posttimestamp;
         this.postcontent = postcontent;
