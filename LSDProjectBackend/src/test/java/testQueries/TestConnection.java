@@ -10,6 +10,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -22,6 +23,7 @@ public class TestConnection {
 	private static final String AUTH_USERNAME = "root";
 	private static final String AUTH_PASSWORD = "root";
 
+        @Ignore
 	@Test
 	public void whatever() throws SQLException {
 		Connection con = DriverManager.getConnection(CONNECTION_STRING, AUTH_USERNAME, AUTH_PASSWORD);
