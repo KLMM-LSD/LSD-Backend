@@ -8,10 +8,14 @@ package DBLayer;
 import entities.Posts;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.SQLException;
 import java.sql.ResultSet;
+import java.sql.SQLException
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.annotation.PostConstruct;
 import javax.json.JsonObject;
 
 /**
@@ -20,29 +24,39 @@ import javax.json.JsonObject;
  */
 public class PostQueries {
 
-    private static DatabaseAccess access;
-    private static Connection connection;
+    private DatabaseAccess access;
+    private Connection connection;
 
-    public static void setUp() throws SQLException {
+    
+    public void setUp() throws SQLException {
         if (access == null) {
             access = new DatabaseAccess();
         }
         if (connection == null) {
-            connection = access.getConnection();
+            try {
+                connection = access.getConnection();
+            } catch (SQLException ex) {
+                System.out.println("Men Der sket en fejl");
+                Logger.getLogger(UserQueries.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
-
-    // Måske postThreadID
-    public void createPost(JsonObject js) throws SQLException{
-
-        PreparedStatement pstmt = connection.prepareStatement("INSERT INTO posts (posttype, parentid, posttimestamp, postauthorid, postcontent) "
-                + "VALUES (?,?,?,?,?)"); 
-        pstmt.setString(1, js.getString("post_type"));
-        pstmt.setInt(2, js.getInt("post_parent"));
-        pstmt.setLong(3, System.currentTimeMillis());
-        pstmt.setString(4, js.getString("username"));
-        pstmt.setString(5, js.getString("post_text"));        
+  
+    // Måske postThreadId
+    public Posts createPost(Posts post) throws SQLException {
+        System.out.println("Nu Laver jeg en post");
+        Posts p = new Posts();
+        setUp();
+        PreparedStatement pstmt = connection.prepareStatement("INSERT INTO posts (postid, posttype, postparentid, posttimestamp, postauthorid, postcontent)"
+                + "VALUES (?,?,?,?,?,?);");
+        pstmt.setInt(1, p.getPostid());
+        pstmt.setString(2, p.getPosttype());
+        pstmt.setInt(3, p.getPostauthorid());
+        pstmt.setLong(4, System.currentTimeMillis());
+        pstmt.setInt(5, p.getPostauthorid());
+        pstmt.setString(6, p.getPostcontent());
         pstmt.execute();
+        return post;
     }
     
 	// Skal timestamp opdateres for at reflektere redigeringstidspunktet? 
@@ -84,8 +98,16 @@ public class PostQueries {
 				//Set postparentid here. (Should be postparent?)
 			} 	while(rs.next());
 		}
-	
-        return posts;
+
+    public int sumOfPosts() throws SQLException {
+        int count = 0;
+        Statement stmt = connection.createStatement();
+        String query = "SELECT * FROM posts;";
+        ResultSet rs = stmt.executeQuery(query);
+        while (rs.next()) {
+            count++;
+        }
+        return count;
     }
-    
+
 }
