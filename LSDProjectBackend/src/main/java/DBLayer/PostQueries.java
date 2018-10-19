@@ -9,7 +9,7 @@ import entities.Posts;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +27,6 @@ public class PostQueries {
     private DatabaseAccess access;
     private Connection connection;
 
-    
     public void setUp() throws SQLException {
         if (access == null) {
             access = new DatabaseAccess();
@@ -41,7 +40,7 @@ public class PostQueries {
             }
         }
     }
-  
+
     // Måske postThreadId
     public Posts createPost(Posts post) throws SQLException {
         System.out.println("Nu Laver jeg en post");
@@ -58,46 +57,48 @@ public class PostQueries {
         pstmt.execute();
         return post;
     }
-    
-	// Skal timestamp opdateres for at reflektere redigeringstidspunktet? 
+
+    // Skal timestamp opdateres for at reflektere redigeringstidspunktet? 
     public void updatePost(JsonObject js) throws SQLException {
-        PreparedStatement pstmt = connection.prepareStatement( "UPDATE posts SET post_text = ?"
-			+ "WHERE postid = ?;");
-		pstmt.setString(1, js.getString("post_text"));
-		pstmt.setInt(2, js.getInt("post_id"));
-		pstmt.execute();
+        PreparedStatement pstmt = connection.prepareStatement("UPDATE posts SET post_text = ?"
+                + "WHERE postid = ?;");
+        pstmt.setString(1, js.getString("post_text"));
+        pstmt.setInt(2, js.getInt("post_id"));
+        pstmt.execute();
     }
-    
+
     public List<Posts> userPosts(int userid) throws SQLException {
         PreparedStatement pstmt = connection.prepareStatement("SELECT postid, posttype, posttimestamp, postcontent FROM posts WHERE postauthorid = ?");
-		pstmt.setInt(1, userid);
-		List<Posts> posts = new ArrayList();
-		ResultSet rs = pstmt.executeQuery();
-		if(!rs.next()){
-			//Users may have no posts, so this is not an issue
-		} else{
-			do{
-				Posts post = new Posts(rs.getInt("postid"), rs.getString("posttype"), rs.getLong("posttimestamp"), rs.getString("postcontent"));
-				posts.add(post);     
-			} 	while(rs.next());
-		}
-	
+        pstmt.setInt(1, userid);
+        List<Posts> posts = new ArrayList();
+        ResultSet rs = pstmt.executeQuery();
+        if (!rs.next()) {
+            //Users may have no posts, so this is not an issue
+        } else {
+            do {
+                Posts post = new Posts(rs.getInt("postid"), rs.getString("posttype"), rs.getInt("postparentid"), rs.getLong("posttimestamp"), rs.getInt("postauthorid"), rs.getString("postcontent"));
+                posts.add(post);
+            } while (rs.next());
+        }
+
         return posts;
     }
-	
-	public List<Posts> postChildren(int postid) throws SQLException {
+
+    public List<Posts> postChildren(int postid) throws SQLException {
         PreparedStatement pstmt = connection.prepareStatement("SELECT postid, posttype, posttimestamp, postcontent FROM posts WHERE postparentid = ?");
-		pstmt.setInt(1, postid);
-		List<Posts> posts = new ArrayList();
-		ResultSet rs = pstmt.executeQuery();
-		if(!rs.next()){
-			//Posts may have no children
-		} else{
-			do{
-				posts.add(new Posts(rs.getInt("postid"), rs.getString("posttype"), rs.getLong("posttimestamp"), rs.getString("postcontent")));
-				//Set postparentid here. (Should be postparent?)
-			} 	while(rs.next());
-		}
+        pstmt.setInt(1, postid);
+        List<Posts> posts = new ArrayList();
+        ResultSet rs = pstmt.executeQuery();
+        if (!rs.next()) {
+            //Posts may have no children
+        } else {
+            do {
+                posts.add(new Posts(rs.getInt("postid"), rs.getString("posttype"), rs.getInt("postparentid"), rs.getLong("posttimestamp"), rs.getInt("postauthorid"), rs.getString("postcontent")));
+                //Set postparentid here. (Should be postparent?)
+            } while (rs.next());
+        }
+        return null;
+    }
 
     public int sumOfPosts() throws SQLException {
         int count = 0;

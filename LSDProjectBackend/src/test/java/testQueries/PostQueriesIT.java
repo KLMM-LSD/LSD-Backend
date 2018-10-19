@@ -62,7 +62,7 @@ public class PostQueriesIT {
     }
     
     @Ignore
-    public void userPostsTest(){
+    public void userPostsTest() throws SQLException{
         List<Posts> userPosts = new ArrayList();
         userPosts = pq.userPosts(1001);
         assertTrue(userPosts.size() > 0);
