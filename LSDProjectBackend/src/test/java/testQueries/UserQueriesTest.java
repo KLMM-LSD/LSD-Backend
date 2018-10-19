@@ -28,7 +28,7 @@ public class UserQueriesTest {
     }
 
     @BeforeClass
-    public static void setUpClass() throws SQLException {
+    public static void setUpClass() throws SQLException, ClassNotFoundException {
         uq = new UserQueries();
         uq.setUp();
         testUser = new Users(999, "user", System.currentTimeMillis(), "TestPerson", "testPWD", "Cool Guy");
