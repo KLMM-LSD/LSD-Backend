@@ -1,17 +1,13 @@
 package DBLayer;
 
-import entities.Users;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.annotation.PostConstruct;
 
 public class UserQueries {
 
+    /*
     private DatabaseAccess access;
     private Connection connection;
 
@@ -80,10 +76,12 @@ public class UserQueries {
             return -1; // Username eksisterer ikke i DB. 
         }
     }
-
+*/
     public int sumOfUsers() throws SQLException {
+        Connection con = HikariCPDataSource.getConnection();
+        Statement stmt = con.createStatement();
         int count = 0;
-        Statement stmt = connection.createStatement();
+        
         String query = "SELECT * FROM users;";
         ResultSet rs = stmt.executeQuery(query);
         while (rs.next()) {

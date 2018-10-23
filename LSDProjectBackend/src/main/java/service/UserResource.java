@@ -7,7 +7,11 @@ package service;
 
 import DBLayer.UserQueries;
 import entities.Users;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import javax.json.JsonObject;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
@@ -25,7 +29,7 @@ import javax.ws.rs.core.MediaType;
  */
 @Path("/users")
 public class UserResource {
-    
+
     @Context
     private UriInfo context;
 
@@ -41,19 +45,27 @@ public class UserResource {
         String b = "Hello there!";
         return b;
     }
-    
-    @POST
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    public void postUser(JsonObject js) throws SQLException {
-        UserQueries postQ = new UserQueries();
-        Users user = new Users();
-        user.setUserid(js.getInt("userid"));
-        user.setUsername(js.getString("username"));
-        user.setUsertype(js.getString("usertype"));
-        user.setUsertimestamp(System.currentTimeMillis());
-        user.setUserpassword(js.getString("userpassword"));
-        user.setUserabout(js.getString("userabout"));
-        postQ.createUser(user);
+
+    @GET
+    @Path("count")
+    @Produces(MediaType.TEXT_PLAIN)
+    public String getUserCount() throws SQLException { 
+        UserQueries uq = new UserQueries();
+        return "Result: " + uq.sumOfUsers();
     }
+//
+//    @POST
+//    @Consumes(MediaType.APPLICATION_JSON)
+//    @Produces(MediaType.APPLICATION_JSON)
+//    public void postUser(JsonObject js) throws SQLException {
+//        UserQueries postQ = new UserQueries();
+//        Users user = new Users();
+//        user.setUserid(js.getInt("userid"));
+//        user.setUsername(js.getString("username"));
+//        user.setUsertype(js.getString("usertype"));
+//        user.setUsertimestamp(System.currentTimeMillis());
+//        user.setUserpassword(js.getString("userpassword"));
+//        user.setUserabout(js.getString("userabout"));
+//        postQ.createUser(user);
+//    }
 }
