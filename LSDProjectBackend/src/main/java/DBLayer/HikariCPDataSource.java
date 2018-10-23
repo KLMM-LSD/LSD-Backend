@@ -20,7 +20,7 @@ public class HikariCPDataSource {
     private static HikariDataSource ds;
 
     static {
-        config.setJdbcUrl("jdbc:mysql://localhost:3306/lsd?zeroDateTimeBehaviour=convertToNull&serverTimezone=UTC");
+        config.setJdbcUrl("jdbc:mysql://localhost:3306/lsd?zeroDateTimeBehaviour=convertToNull&serverTimezone=UTC&useSSL=false");
         config.setUsername("root");
         config.setPassword("root");
         config.addDataSourceProperty("cachePrepStmts", "true");
