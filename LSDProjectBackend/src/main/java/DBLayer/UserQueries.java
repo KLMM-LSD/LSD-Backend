@@ -1,7 +1,7 @@
 package DBLayer;
 
+import entities.Users;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -66,25 +66,37 @@ public class UserQueries {
         pstmt.setInt(1, userid);
         pstmt.execute();
     }
-
-    public int getUserIdByName(String name) throws SQLException {
-        Statement stmt = connection.createStatement();
-        String query = "SELECT userid FROM users WHERE username = " + name + ";";
-        ResultSet rs = stmt.executeQuery(query);
-        if (rs.next()) {
-            return rs.getInt("userid");
-        } else {
-            return -1; // Username eksisterer ikke i DB. 
-        }
-    }
      */
+    
+    public Users getUserByName(String name) throws SQLException
+    {
+        Connection con = HikariCPDataSource.getConnection();
+        String query = "SELECT * FROM users WHERE username = \"" + name + "\"";
+        Statement st = con.createStatement();
+        ResultSet rs = st.executeQuery(query);
+        Users ret = null;
+        
+        while (rs.next()) {
+            Integer userid = rs.getInt("userid");
+            String usertype = rs.getString("usertype");
+            long usertimestamp = rs.getLong("usertimestamp");
+            String username = rs.getString("username");
+            String userpassword = rs.getString("userpassword");
+            String userabout = rs.getString("userabout");
+            ret =  new Users(userid, usertype, usertimestamp, username, userpassword, userabout);
+        }
+        
+        con.close();
+        return ret;
+    }
+    
     public int countUsers() throws SQLException {
         Connection con = HikariCPDataSource.getConnection();
-        Statement st = con.createStatement();
         String query = "SELECT COUNT(*) FROM users";
+        Statement st = con.createStatement();
+        ResultSet rs = st.executeQuery(query);
         int ret = -1;
 
-        ResultSet rs = st.executeQuery(query);
         while (rs.next()) {
             ret = rs.getInt(1);
         }
