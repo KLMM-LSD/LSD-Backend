@@ -51,7 +51,7 @@ public class UserResource {
     @Produces(MediaType.TEXT_PLAIN)
     public String getUserCount() throws SQLException { 
         UserQueries uq = new UserQueries();
-        return "Result: " + uq.sumOfUsers();
+        return "Result: " + uq.countUsers();
     }
 //
 //    @POST

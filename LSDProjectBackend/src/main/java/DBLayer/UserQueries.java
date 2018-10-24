@@ -1,6 +1,7 @@
 package DBLayer;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -76,18 +77,20 @@ public class UserQueries {
             return -1; // Username eksisterer ikke i DB. 
         }
     }
-*/
-    public int sumOfUsers() throws SQLException {
+     */
+    public int countUsers() throws SQLException {
         Connection con = HikariCPDataSource.getConnection();
-        Statement stmt = con.createStatement();
-        int count = 0;
-        
-        String query = "SELECT * FROM users;";
-        ResultSet rs = stmt.executeQuery(query);
+        Statement st = con.createStatement();
+        String query = "SELECT COUNT(*) FROM users";
+        int ret = -1;
+
+        ResultSet rs = st.executeQuery(query);
         while (rs.next()) {
-            count++;
+            ret = rs.getInt(1);
         }
-        return count;
+
+        con.close();
+        return ret;
     }
 
 }

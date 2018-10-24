@@ -29,37 +29,46 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "users")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Users.findAll", query = "SELECT u FROM Users u")
+    @NamedQuery(name = "Users.findAll", query = "SELECT * FROM Users")
     , @NamedQuery(name = "Users.findByUserid", query = "SELECT u FROM Users u WHERE u.userid = :userid")
     , @NamedQuery(name = "Users.findByUsertype", query = "SELECT u FROM Users u WHERE u.usertype = :usertype")
     , @NamedQuery(name = "Users.findByUsertimestamp", query = "SELECT u FROM Users u WHERE u.usertimestamp = :usertimestamp")
     , @NamedQuery(name = "Users.findByUsername", query = "SELECT u FROM Users u WHERE u.username = :username")
     , @NamedQuery(name = "Users.findByUserpassword", query = "SELECT u FROM Users u WHERE u.userpassword = :userpassword")
-    , @NamedQuery(name = "Users.findByUserabout", query = "SELECT u FROM Users u WHERE u.userabout = :userabout")})
+    , @NamedQuery(name = "Users.findByUserabout", query = "SELECT u FROM Users u WHERE u.userabout = :userabout")
+})
 public class Users implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "userid")
     private Integer userid;
+    
     @Basic(optional = false)
     @Column(name = "usertype")
     private String usertype;
+    
     @Basic(optional = false)
     @Column(name = "usertimestamp")
     private long usertimestamp;
+    
     @Basic(optional = false)
     @Column(name = "username")
     private String username;
+    
     @Basic(optional = false)
     @Column(name = "userpassword")
     private String userpassword;
+    
     @Column(name = "userabout")
     private String userabout;
+    
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "ratingauthorid")
     private Collection<Ratings> ratingsCollection;
+    
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "postauthorid")
     private Collection<Posts> postsCollection;
 
