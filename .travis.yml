@@ -6,3 +6,8 @@ services:
 before_install:
     #Change into directory where pom.xml is located
     - cd LSDProjectBackend
+    #Change mysql password to match local development config (from travis docs)
+    - sudo mysql -e "use mysql; update user set authentication_string=PASSWORD('new_password') where User='root'; update user set plugin='mysql_native_password';FLUSH PRIVILEGES;"
+    # Disabled because it shouldn't be necessary
+    #- sudo mysql_upgrade -u root -pnew_password
+    - sudo service mysql restart
