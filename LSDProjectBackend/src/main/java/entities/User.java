@@ -25,6 +25,4 @@ public class User {
         this.userabout = userabout;
     }
 
-    
-
 }

@@ -7,6 +7,9 @@ package faketest;
 
 import DBLayer.PostQueries;
 import DBLayer.UserQueries;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import entities.Post;
 import entities.User;
 import java.sql.SQLException;
@@ -52,14 +55,36 @@ public class FakeTest {
 
     public static void testGet() throws SQLException {
         PostQueries pq = new PostQueries();
-        ArrayList<Post> ret = pq.getThread(7);
+        ArrayList<Post> ret = pq.getThread(1);
+        JsonObject list = new JsonObject();
+
+        JsonArray arr_postids = new JsonArray();
+        JsonArray arr_postparentid = new JsonArray();
+        JsonArray arr_postauthorid = new JsonArray();
+        JsonArray arr_postthreadid = new JsonArray();
+        JsonArray arr_postcontent = new JsonArray();
 
         for (Post p : ret) {
-            System.out.println(p.postcontent);
+            arr_postids.add(p.postid);
+            arr_postparentid.add(p.postparentid);
+            arr_postauthorid.add(p.postauthorid);
+            arr_postthreadid.add(p.postthreadid);
+            arr_postcontent.add(p.postcontent);
         }
+        
+        
+        list.addProperty("length", ret.size());
+
+        list.add("arr_postids", arr_postids);
+        list.add("arr_postparentid", arr_postparentid);
+        list.add("arr_postauthorid", arr_postauthorid);
+        list.add("arr_postthreadid", arr_postthreadid);
+        list.add("arr_postcontent", arr_postcontent);
+
+        System.out.println(list.toString());
     }
 
     public static void main(String[] args) throws SQLException {
-        initUsers();
+        testGet();
     }
 }

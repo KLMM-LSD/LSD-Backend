@@ -6,7 +6,6 @@
 package DBLayer;
 
 import entities.Post;
-import entities.User;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -21,7 +20,7 @@ public class PostQueries {
 
     private static final String INSERT_STORY_QUERY = "INSERT INTO posts VALUES (?, ?, NULL, ?, NULL, ?)";
     private static final String INSERT_COMMENT_QUERY = "INSERT INTO posts VALUES (?, ?, ?, ?, ?, ?)";
-    private static final String GET_THREAD_QUERY = "SELECT * FROM posts WHERE posts.postthreadid = ? OR posts.postid = ? ORDER BY posts.posttimestamp";
+    private static final String GET_THREAD_QUERY = "SELECT * FROM posts WHERE posts.postthreadid = ? OR posts.postid = ? ORDER BY posts.postid";
     private static final String GET_POST_QUERY = "SELECT * FROM posts WHERE postid = ?";
 
     /* 0 er ikke NULL i MySQL */
