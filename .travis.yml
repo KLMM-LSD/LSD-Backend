@@ -15,4 +15,4 @@ before_install:
     #Create database with new credentials
     - curl -O https://raw.githubusercontent.com/KLMM-LSD/LSD-Database/master/db.sql
     - sudo mysql -u root -proot < db.sql
-    - echo 'quit' | sudo mysql -u root -proot
+    - sudo mysql -u root -proot
