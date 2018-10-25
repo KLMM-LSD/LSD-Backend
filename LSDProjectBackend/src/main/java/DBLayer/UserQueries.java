@@ -20,6 +20,9 @@ public class UserQueries {
     public User getUserByName(String name) throws SQLException {
         Connection con = HikariCPDataSource.getConnection();
         PreparedStatement st = con.prepareStatement(GET_USER_BY_NAME);
+        
+        st.setString(1, name);
+        
         ResultSet rs = st.executeQuery();
         User ret = null;
 
