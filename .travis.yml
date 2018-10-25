@@ -13,4 +13,5 @@ before_install:
     - sudo mysql -e "SET PASSWORD FOR 'root'@'localhost' = PASSWORD('root');"
     - sudo service mysql restart
     #Create database with new credentials
-    - sudo mysql -u root -proot -e "CREATE DATABASE lsd;"
+    - curl -O https://raw.githubusercontent.com/KLMM-LSD/LSD-Database/master/db.sql
+    - sudo mysql -u root -proot < db.sql
