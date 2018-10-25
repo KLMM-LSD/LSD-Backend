@@ -11,6 +11,8 @@ before_install:
     - sudo mysql -e "SET PASSWORD FOR 'root'@'localhost' = PASSWORD('root');"
     #- sudo mysql_upgrade -u root -proot
     #Print password to see difference
+    - sudo mysql -u root  -proot
     - sudo mysql -e "CREATE DATABASE lsdtest;"
     - sudo service mysql restart
+    # Checking that login still works after restart
     - sudo mysql -u root  -proot
