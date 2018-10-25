@@ -5,6 +5,8 @@
  */
 package faketest;
 
+import DBLayer.UserQueries;
+import entities.User;
 import java.sql.SQLException;
 
 /**
@@ -13,8 +15,12 @@ import java.sql.SQLException;
  */
 public class FakeTest {
 
-    public static void initUsers() {
-        
+    public static void initUsers() throws SQLException {
+        UserQueries uq = new UserQueries();
+        User u = new User(1, "user", System.currentTimeMillis(),
+                "poobread", "abcdef", "I am a user");
+       
+        uq.insertUser(u);
     }
 
     public static void main(String[] args) throws SQLException {

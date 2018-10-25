@@ -2,6 +2,7 @@ package DBLayer;
 
 import entities.User;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -67,15 +68,13 @@ public class UserQueries {
         pstmt.execute();
     }
      */
-    
-    public User getUserByName(String name) throws SQLException
-    {
+    public User getUserByName(String name) throws SQLException {
         Connection con = HikariCPDataSource.getConnection();
         String query = "SELECT * FROM users WHERE username = \"" + name + "\"";
         Statement st = con.createStatement();
         ResultSet rs = st.executeQuery(query);
         User ret = null;
-        
+
         while (rs.next()) {
             Integer userid = rs.getInt("userid");
             String usertype = rs.getString("usertype");
@@ -85,11 +84,11 @@ public class UserQueries {
             String userabout = rs.getString("userabout");
             ret = new User(userid, usertype, usertimestamp, username, userpassword, userabout);
         }
-        
+
         con.close();
         return ret;
     }
-    
+
     public int countUsers() throws SQLException {
         Connection con = HikariCPDataSource.getConnection();
         String query = "SELECT COUNT(*) FROM users";
@@ -103,6 +102,22 @@ public class UserQueries {
 
         con.close();
         return ret;
+    }
+
+    public void insertUser(User u) throws SQLException {
+        Connection con = HikariCPDataSource.getConnection();
+        PreparedStatement p = con.prepareStatement("INSERT INTO users VALUES (?, ?, ?, ?, ?, ?)");
+
+        p.setInt(1, u.userid);
+        p.setString(2, u.usertype);
+        p.setLong(3, u.usertimestamp);
+        p.setString(4, u.username);
+        p.setString(5, u.userpassword);
+        p.setString(6, u.userabout);
+
+        p.execute();
+
+        con.close();
     }
 
 }
