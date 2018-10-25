@@ -9,9 +9,8 @@ before_install:
     - cd LSDProjectBackend
     #Change mysql password to match local development config (from travis docs)
     - sudo mysql -e "use mysql; update user set authentication_string=PASSWORD('root') where User='root'; update user set plugin='mysql_native_password';FLUSH PRIVILEGES;"
+    - sudo mysql_upgrade -u root -proot
     - sudo mysql -u root  -proot
     #Print password to see difference
     - sudo mysql -e "CREATE DATABASE lsdtest;"
-    # Disabled because it shouldn't be necessary
-    #- sudo mysql_upgrade -u "root" -p "root"
     - sudo service mysql restart
