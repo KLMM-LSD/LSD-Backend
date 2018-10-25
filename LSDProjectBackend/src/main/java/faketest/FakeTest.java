@@ -8,7 +8,6 @@ package faketest;
 import DBLayer.PostQueries;
 import DBLayer.UserQueries;
 import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import entities.Post;
 import entities.User;
