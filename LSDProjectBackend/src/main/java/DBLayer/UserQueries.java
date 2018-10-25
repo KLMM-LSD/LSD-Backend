@@ -68,6 +68,7 @@ public class UserQueries {
         pstmt.execute();
     }
      */
+    
     public User getUserByName(String name) throws SQLException {
         Connection con = HikariCPDataSource.getConnection();
         String query = "SELECT * FROM users WHERE username = \"" + name + "\"";
@@ -106,16 +107,16 @@ public class UserQueries {
 
     public void insertUser(User u) throws SQLException {
         Connection con = HikariCPDataSource.getConnection();
-        PreparedStatement p = con.prepareStatement("INSERT INTO users VALUES (?, ?, ?, ?, ?, ?)");
+        PreparedStatement st = con.prepareStatement("INSERT INTO users VALUES (?, ?, ?, ?, ?, ?)");
 
-        p.setInt(1, u.userid);
-        p.setString(2, u.usertype);
-        p.setLong(3, u.usertimestamp);
-        p.setString(4, u.username);
-        p.setString(5, u.userpassword);
-        p.setString(6, u.userabout);
+        st.setInt(1, u.userid);
+        st.setString(2, u.usertype);
+        st.setLong(3, u.usertimestamp);
+        st.setString(4, u.username);
+        st.setString(5, u.userpassword);
+        st.setString(6, u.userabout);
 
-        p.execute();
+        st.execute();
 
         con.close();
     }

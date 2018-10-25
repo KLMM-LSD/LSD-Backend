@@ -5,7 +5,9 @@
  */
 package faketest;
 
+import DBLayer.PostQueries;
 import DBLayer.UserQueries;
+import entities.Post;
 import entities.User;
 import java.sql.SQLException;
 
@@ -14,15 +16,25 @@ import java.sql.SQLException;
  * @author Lasse
  */
 public class FakeTest {
-
+    
     public static void initUsers() throws SQLException {
         UserQueries uq = new UserQueries();
-        User u = new User(1, "user", System.currentTimeMillis(),
+        PostQueries pq = new PostQueries();
+        
+        User u1 = new User(1, "user", System.currentTimeMillis(),
                 "poobread", "abcdef", "I am a user");
-       
-        uq.insertUser(u);
+        User u2 = new User(2, "user", System.currentTimeMillis(),
+                "einstein", "dasdas", "I am clever");
+        
+        Post p1 = new Post(1, "story", System.currentTimeMillis(), 1, "Quite a story");
+        
+        uq.insertUser(u1);
+        uq.insertUser(u2);
+        
+        pq.insertStory(p1);
+        
     }
-
+    
     public static void main(String[] args) throws SQLException {
         initUsers();
     }
