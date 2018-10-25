@@ -2,8 +2,8 @@
 
 language: java
 
-services:
-    - mysql
+addons:
+    mariadb: '10.0'
 
 before_install:
     - echo "Configuring build."
