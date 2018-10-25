@@ -36,7 +36,6 @@ public class Post {
         this.postauthorid = postauthorid;
         this.postcontent = postcontent;
     }
-    
-    
+   
 
 }

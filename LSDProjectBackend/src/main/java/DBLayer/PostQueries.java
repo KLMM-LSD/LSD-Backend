@@ -8,7 +8,9 @@ package DBLayer;
 import entities.Post;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 /**
  *
@@ -18,6 +20,7 @@ public class PostQueries {
 
     private static final String INSERT_STORY_QUERY = "INSERT INTO posts VALUES (?, ?, NULL, ?, ?, NULL, ?)";
     private static final String INSERT_COMMENT_QUERY = "INSERT INTO posts VALUES (?, ?, ?, ?, ?, ?, ?)";
+    private static final String GET_THREAD_QUERY = "SELECT * FROM posts WHERE posts.postthreadid = ? OR posts.postid = ? ORDER BY posts.posttimestamp";
 
     /* 0 er ikke NULL i MySQL */
     public void insertStory(Post p) throws SQLException {
@@ -52,5 +55,33 @@ public class PostQueries {
 
         st.execute();
         con.close();
+    }
+
+    public ArrayList<Post> getThread(int threadid) throws SQLException {
+        ArrayList<Post> ret = new ArrayList<>();
+        Connection con = HikariCPDataSource.getConnection();
+        PreparedStatement st = con.prepareStatement(GET_THREAD_QUERY);
+        
+        st.setInt(1, threadid);
+        st.setInt(2, threadid);
+        
+        ResultSet rs = st.executeQuery();
+        
+        while (rs.next()) {
+            int postid = rs.getInt("postid");
+            String posttype = rs.getString("posttype");
+            int postparentid = rs.getInt("postparentid");
+            long posttimestamp = rs.getLong("posttimestamp");
+            int authorid = rs.getInt("postauthorid");
+            int postthreadid = rs.getInt("postthreadid");
+            String postcontent = rs.getString("postcontent");
+
+            Post tmp = new Post(postid, posttype, postparentid, posttimestamp, authorid, postthreadid, postcontent);
+            ret.add(tmp);
+        }
+
+        con.close();
+
+        return ret;
     }
 }
