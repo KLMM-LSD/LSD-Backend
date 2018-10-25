@@ -15,7 +15,7 @@ import org.junit.Test;
  *
  * @author Lasse
  */
-public class UserTestIT {
+public class UserTest {
 
     @Test
     public void insertUser() throws SQLException {
