@@ -13,7 +13,7 @@ import java.sql.Statement;
  */
 public class UserQueries {
 
-    private static final String INSERT_USER_QUERY = "INSERT INTO users (userid, usertype, username, userpassword, userabout) VALUES (?, ?, ?, ?, ?)";
+    private static final String INSERT_USER_QUERY = "INSERT INTO users VALUES (?, ?, ?, ?, ?)";
     private static final String COUNT_USERS_QUERY = "SELECT COUNT(*) FROM users";
     private static final String GET_USER_BY_NAME = "SELECT * FROM users WHERE username = ?";
 
