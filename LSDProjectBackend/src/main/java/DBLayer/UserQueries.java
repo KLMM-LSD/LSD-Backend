@@ -13,7 +13,7 @@ import java.sql.Statement;
  */
 public class UserQueries {
 
-    private static final String INSERT_USER_QUERY = "INSERT INTO users VALUES (?, ?, ?, ?, ?, ?)";
+    private static final String INSERT_USER_QUERY = "INSERT INTO users VALUES (?, ?, ?, ?, ?)";
     private static final String COUNT_USERS_QUERY = "SELECT COUNT(*) FROM users";
     private static final String GET_USER_BY_NAME = "SELECT * FROM users WHERE username = ?";
 
@@ -26,12 +26,11 @@ public class UserQueries {
         while (rs.next()) {
             int userid = rs.getInt("userid");
             String usertype = rs.getString("usertype");
-            long usertimestamp = rs.getLong("usertimestamp");
             String username = rs.getString("username");
             String userpassword = rs.getString("userpassword");
             String userabout = rs.getString("userabout");
 
-            ret = new User(userid, usertype, usertimestamp, username, userpassword, userabout);
+            ret = new User(userid, usertype, username, userpassword, userabout);
         }
         con.close();
 
@@ -58,10 +57,9 @@ public class UserQueries {
 
         st.setInt(1, u.userid);
         st.setString(2, u.usertype);
-        st.setLong(3, u.usertimestamp);
-        st.setString(4, u.username);
-        st.setString(5, u.userpassword);
-        st.setString(6, u.userabout);
+        st.setString(3, u.username);
+        st.setString(4, u.userpassword);
+        st.setString(5, u.userabout);
 
         st.execute();
 

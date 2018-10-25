@@ -17,44 +17,49 @@ import java.util.ArrayList;
  * @author Lasse
  */
 public class FakeTest {
-    
+
     public static void initUsers() throws SQLException {
         UserQueries uq = new UserQueries();
         PostQueries pq = new PostQueries();
-        
-        User u1 = new User(1, "user", System.currentTimeMillis(),
-                "poobread", "abcdef", "I am a user");
-        User u2 = new User(2, "user", System.currentTimeMillis(),
-                "einstein", "dasdas", "I am clever");
-        
-        Post p1 = new Post(1, "story", System.currentTimeMillis(), 1, "Story Quite a story");
-        Post p2 = new Post(2, "comment", 1, System.currentTimeMillis(), 2, 1, "Comment GOod story");
-        Post p3 = new Post(3, "comment", 2, System.currentTimeMillis(), 1, 1, "Comment Thanks dude");
-        
-        Post p4 = new Post(4, "story", System.currentTimeMillis(), 2, "Story I am drunk");
-        Post p5 = new Post(5, "comment", 4, System.currentTimeMillis(), 1, 4, "Comment GOod story");
-        
+
+        Post p1 = new Post();
+        Post p2 = new Post();
+        Post p3 = new Post();
+        Post p4 = new Post();
+        Post p5 = new Post();
+
+        User u1 = new User(1, "user", "poobread", "abcdef", "I am a user");
+        User u2 = new User(2, "user", "einstein", "dasdas", "I am clever");
+
+        p1.initStory(1, 1, "Story quite a story");
+        p2.initComment(2, 1, 2, "Comment good story");
+        p3.initComment(3, 2, 1, "comment thanks dude");
+
+        p4.initStory(4, 2, "Story I am drunk");
+        p5.initComment(5, 4, 1, "Commetn goos story");
+
         uq.insertUser(u1);
         uq.insertUser(u2);
-        
+
         pq.insertStory(p1);
-        pq.insertPost(p2);
-        pq.insertPost(p3);
-        
+        pq.insertCommentWithLookup(p2);
+        pq.insertCommentWithLookup(p3);
+
         pq.insertStory(p4);
-        pq.insertPost(p5);
-        
+        pq.insertCommentWithLookup(p5);
+
     }
-    
+
     public static void testGet() throws SQLException {
         PostQueries pq = new PostQueries();
-        ArrayList<Post> ret = pq.getThread(1);
-        
-        for (Post p : ret)
+        ArrayList<Post> ret = pq.getThread(7);
+
+        for (Post p : ret) {
             System.out.println(p.postcontent);
+        }
     }
-    
+
     public static void main(String[] args) throws SQLException {
-        testGet();
+        initUsers();
     }
 }
