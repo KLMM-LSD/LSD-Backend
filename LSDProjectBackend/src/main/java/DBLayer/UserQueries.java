@@ -1,6 +1,6 @@
 package DBLayer;
 
-import entities.Users;
+import entities.User;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -68,13 +68,13 @@ public class UserQueries {
     }
      */
     
-    public Users getUserByName(String name) throws SQLException
+    public User getUserByName(String name) throws SQLException
     {
         Connection con = HikariCPDataSource.getConnection();
         String query = "SELECT * FROM users WHERE username = \"" + name + "\"";
         Statement st = con.createStatement();
         ResultSet rs = st.executeQuery(query);
-        Users ret = null;
+        User ret = null;
         
         while (rs.next()) {
             Integer userid = rs.getInt("userid");
@@ -83,7 +83,7 @@ public class UserQueries {
             String username = rs.getString("username");
             String userpassword = rs.getString("userpassword");
             String userabout = rs.getString("userabout");
-            ret =  new Users(userid, usertype, usertimestamp, username, userpassword, userabout);
+            ret = new User(userid, usertype, usertimestamp, username, userpassword, userabout);
         }
         
         con.close();

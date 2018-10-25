@@ -5,12 +5,19 @@
  */
 package faketest;
 
+import java.sql.SQLException;
+
 /**
  *
  * @author Lasse
  */
 public class FakeTest {
-    public static void main(String[] args) {
+
+    public static void initUsers() {
         
+    }
+
+    public static void main(String[] args) throws SQLException {
+        initUsers();
     }
 }

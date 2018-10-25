@@ -6,26 +6,20 @@
 package service;
 
 import DBLayer.UserQueries;
-import entities.Users;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
+import com.google.gson.JsonObject;
+import entities.User;
 import java.sql.SQLException;
-import java.sql.Statement;
-import javax.json.JsonObject;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
-import javax.ws.rs.Consumes;
 import javax.ws.rs.Produces;
 import javax.ws.rs.GET;
-import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.MediaType;
 
 /**
  * REST Web Service
  *
- * @author Micha
+ * @author Lasse
  */
 @Path("/users")
 public class UserResource {
@@ -47,9 +41,23 @@ public class UserResource {
     }
 
     @GET
+    @Path("poobread")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String getPoobread() throws SQLException {
+        UserQueries uq = new UserQueries();
+        User u = uq.getUserByName("poobread");
+        JsonObject jo = new JsonObject();
+
+        jo.addProperty("username", u.username);
+        jo.addProperty("userabout", u.userabout);
+
+        return jo.toString();
+    }
+
+    @GET
     @Path("count")
     @Produces(MediaType.TEXT_PLAIN)
-    public String getUserCount() throws SQLException { 
+    public String getUserCount() throws SQLException {
         UserQueries uq = new UserQueries();
         return "Result: " + uq.countUsers();
     }
