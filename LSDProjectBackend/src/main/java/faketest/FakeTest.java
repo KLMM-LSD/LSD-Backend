@@ -27,11 +27,13 @@ public class FakeTest {
                 "einstein", "dasdas", "I am clever");
         
         Post p1 = new Post(1, "story", System.currentTimeMillis(), 1, "Quite a story");
+        Post p2 = new Post(2, "comment", 1, System.currentTimeMillis(), 2, 1, "GOod story");
         
         uq.insertUser(u1);
         uq.insertUser(u2);
         
         pq.insertStory(p1);
+        pq.insertPost(p2);
         
     }
     

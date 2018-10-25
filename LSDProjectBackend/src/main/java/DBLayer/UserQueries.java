@@ -9,6 +9,9 @@ import java.sql.Statement;
 
 public class UserQueries {
 
+    private static final String INSERT_USER_QUERY = "INSERT INTO users VALUES (?, ?, ?, ?, ?, ?)";
+    private static final String COUNT_USERS_QUERY = "SELECT COUNT(*) FROM users";
+
     /*
     private DatabaseAccess access;
     private Connection connection;
@@ -68,7 +71,6 @@ public class UserQueries {
         pstmt.execute();
     }
      */
-    
     public User getUserByName(String name) throws SQLException {
         Connection con = HikariCPDataSource.getConnection();
         String query = "SELECT * FROM users WHERE username = \"" + name + "\"";
@@ -92,9 +94,8 @@ public class UserQueries {
 
     public int countUsers() throws SQLException {
         Connection con = HikariCPDataSource.getConnection();
-        String query = "SELECT COUNT(*) FROM users";
         Statement st = con.createStatement();
-        ResultSet rs = st.executeQuery(query);
+        ResultSet rs = st.executeQuery(COUNT_USERS_QUERY);
         int ret = -1;
 
         while (rs.next()) {
@@ -107,7 +108,7 @@ public class UserQueries {
 
     public void insertUser(User u) throws SQLException {
         Connection con = HikariCPDataSource.getConnection();
-        PreparedStatement st = con.prepareStatement("INSERT INTO users VALUES (?, ?, ?, ?, ?, ?)");
+        PreparedStatement st = con.prepareStatement(INSERT_USER_QUERY);
 
         st.setInt(1, u.userid);
         st.setString(2, u.usertype);
