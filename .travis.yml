@@ -8,9 +8,9 @@ before_install:
     #Change into directory where pom.xml is located
     - cd LSDProjectBackend
     #Change mysql password to match local development config (from travis docs)
-    - sudo mysql -e "use mysql; update user set authentication_string=PASSWORD('root') where User='root'; update user set plugin='mysql_native_password';FLUSH PRIVILEGES;"
-    - sudo mysql_upgrade -u root -proot
-    - sudo mysql -u root  -proot
+    - sudo mysql -e "SET PASSWORD FOR 'root'@'localhost' = PASSWORD('root');"
+    #- sudo mysql_upgrade -u root -proot
     #Print password to see difference
     - sudo mysql -e "CREATE DATABASE lsdtest;"
     - sudo service mysql restart
+    - sudo mysql -u root  -proot
