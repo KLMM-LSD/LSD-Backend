@@ -7,10 +7,8 @@ before_install:
     - echo "Configuring build."
     #Change into directory where pom.xml is located
     - cd LSDProjectBackend
-    #Change mysql password to match local development config (from travis docs)
+    #Change mysql password to match local development config (from travis docs),
+    #  then create DB with new credentials
     - sudo mysql -e "SET PASSWORD FOR 'root'@'localhost' = PASSWORD('root');"
-    #- sudo mysql_upgrade -u root -proot
-    #Print password to see difference
-    - sudo mysql -u root -proot -e "CREATE DATABASE lsd;"
     - sudo service mysql restart
-
+    - sudo mysql -u root -proot -e "CREATE DATABASE lsd;"
