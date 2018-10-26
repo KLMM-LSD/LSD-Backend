@@ -23,10 +23,9 @@ public class UserTestIT {
         UserQueries uq = new UserQueries();
         User lookup;
         int before, after;
-        
-        
+
         before = uq.countUsers();
-        
+
         User u1 = new User(-1, "user", "poobread", "abcdef");
         User u2 = new User(-1, "user", "einstein", "dasdas");
 

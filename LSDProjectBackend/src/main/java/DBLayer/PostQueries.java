@@ -22,6 +22,7 @@ public class PostQueries {
     private static final String INSERT_COMMENT_QUERY = "INSERT INTO posts VALUES (?, ?, ?, ?, ?, ?)";
     private static final String GET_THREAD_QUERY = "SELECT * FROM posts WHERE posts.postthreadid = ? OR posts.postid = ? ORDER BY posts.postid";
     private static final String GET_POST_QUERY = "SELECT * FROM posts WHERE postid = ?";
+    private static final String GET_MOST_RECENT_POST_QUERY = "SELECT * FROM posts ORDER BY postid DESC LIMIT 1";
 
     /* 0 er ikke NULL i MySQL */
     public void insertStory(Post p) throws SQLException {
@@ -39,6 +40,30 @@ public class PostQueries {
         st.execute();
 
         con.close();
+    }
+
+    public Post getMostRecentPost() throws SQLException {
+        Connection con = HikariCPDataSource.getConnection();
+        ResultSet rs;
+        Post ret = null;
+
+        PreparedStatement st = con.prepareStatement(GET_MOST_RECENT_POST_QUERY);
+        rs = st.executeQuery();
+
+        while (rs.next()) {
+            int postid = rs.getInt("postid");
+            String posttype = rs.getString("posttype");
+            int postparentid = rs.getInt("postparentid");
+            int postauthorid = rs.getInt("postauthorid");
+            int postthreadid = rs.getInt("postthreadid");
+            String postcontent = rs.getString("postcontent");
+
+            ret = new Post(postid, posttype, postparentid, postauthorid, postthreadid, postcontent);
+        }
+
+        con.close();
+
+        return ret;
     }
 
     public void insertCommentWithLookup(Post p) throws SQLException {

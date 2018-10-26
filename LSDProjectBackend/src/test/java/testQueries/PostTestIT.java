@@ -30,6 +30,7 @@ public class PostTestIT {
     public void insertStory() throws SQLException {
         UserQueries uq = new UserQueries();
         PostQueries pq = new PostQueries();
+        ArrayList<Post> thread;
 
         Post story = new Post();
         Post reply1 = new Post();
@@ -53,6 +54,10 @@ public class PostTestIT {
         pq.insertCommentWithLookup(reply1);
         pq.insertCommentWithLookup(reply2);
         pq.insertCommentWithLookup(reply3);
+        
+        thread = pq.getThread(100);
+
+        assertEquals(4, thread.size());
     }
 
     /* Story
@@ -88,5 +93,28 @@ public class PostTestIT {
         thread = pq.getThread(200);
 
         assertEquals(3, thread.size());
+    }
+    
+    @Test
+    public void getMostRecentTest() throws SQLException
+    {
+        UserQueries uq = new UserQueries();
+        PostQueries pq = new PostQueries();
+        User u = new User(-1, "user", "authorthree", "authorpwd");
+        User lookup;
+        Post p = new Post();
+        Post recentLookup;
+        
+        uq.insertUser(u);
+        
+        lookup = uq.getUserByName("authorthree");
+        p.initStory(300, lookup.userid, "Story three");
+        
+        pq.insertStory(p);
+        
+        recentLookup = pq.getMostRecentPost();
+        
+        assertEquals(p.postauthorid, recentLookup.postauthorid);
+        assertEquals(p.postcontent, recentLookup.postcontent);
     }
 }
