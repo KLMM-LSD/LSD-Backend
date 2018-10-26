@@ -40,49 +40,6 @@ public class UserResource {
     public UserResource() {
     }
 
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    public String getUser() {
-        String b = "Hello there!";
-        return b;
-    }
-
-    @GET
-    @Path("poobread")
-    @Produces(MediaType.APPLICATION_JSON)
-    public String getPoobread() throws SQLException {
-        UserQueries uq = new UserQueries();
-        User u = uq.getUserByName("poobread");
-        JsonObject jo = new JsonObject();
-
-        jo.addProperty("username", u.username);
-        jo.addProperty("userid", u.userid);
-
-        return jo.toString();
-    }
-
-    @GET
-    @Path("count")
-    @Produces(MediaType.TEXT_PLAIN)
-    public String getUserCount() throws SQLException {
-        UserQueries uq = new UserQueries();
-        return "Result: " + uq.countUsers();
-    }
-
-    @POST
-    @Path("create")
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.TEXT_PLAIN)
-    public String fakeCreate(String body) {
-        String ret = "todo";
-
-        JsonParser jp = new JsonParser();
-        JsonObject jo = jp.parse(body).getAsJsonObject();
-
-        ret += jo.get("username").getAsString();
-
-        return ret;
-    }
 
     @POST
     @Path("signup")
@@ -129,19 +86,4 @@ public class UserResource {
                 je_password.getAsString());
     }
 
-//
-//    @POST
-//    @Consumes(MediaType.APPLICATION_JSON)
-//    @Produces(MediaType.APPLICATION_JSON)
-//    public void postUser(JsonObject js) throws SQLException {
-//        UserQueries postQ = new UserQueries();
-//        Users user = new Users();
-//        user.setUserid(js.getInt("userid"));
-//        user.setUsername(js.getString("username"));
-//        user.setUsertype(js.getString("usertype"));
-//        user.setUsertimestamp(System.currentTimeMillis());
-//        user.setUserpassword(js.getString("userpassword"));
-//        user.setUserabout(js.getString("userabout"));
-//        postQ.createUser(user);
-//    }
 }
