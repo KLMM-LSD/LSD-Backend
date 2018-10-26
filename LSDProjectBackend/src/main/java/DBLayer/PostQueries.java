@@ -53,10 +53,10 @@ public class PostQueries {
         while (parent_rs.next()) {
             if (parent_rs.getString("posttype").equals("story")) {
                 p.postthreadid = p.postparentid;
-                System.out.println("Use parent id as threadid" + p.postthreadid);
+//                System.out.println("Use parent id as threadid" + p.postthreadid);
             } else {
                 p.postthreadid = parent_rs.getInt("postthreadid");
-                System.out.println("Use threadid as threaid" + p.postthreadid);
+//                System.out.println("Use threadid as threaid" + p.postthreadid);
             }
             found = true;
         }

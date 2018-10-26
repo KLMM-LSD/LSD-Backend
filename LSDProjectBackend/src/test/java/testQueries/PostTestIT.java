@@ -10,6 +10,8 @@ import DBLayer.UserQueries;
 import entities.Post;
 import entities.User;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 import org.junit.Test;
 
@@ -28,28 +30,63 @@ public class PostTestIT {
     public void insertStory() throws SQLException {
         UserQueries uq = new UserQueries();
         PostQueries pq = new PostQueries();
-        
+
         Post story = new Post();
         Post reply1 = new Post();
         Post reply2 = new Post();
         Post reply3 = new Post();
-        
+
         User u, lookup;
-        
+
         u = new User(-1, "user", "authorone", "authorpwd");
         uq.insertUser(u);
-        
+
         lookup = uq.getUserByName("authorone");
         assertNotEquals(null, lookup);
-        
+
         story.initStory(100, lookup.userid, "The story");
         reply1.initComment(101, 100, lookup.userid, "Reply1");
-        reply2.initComment(102, 101, lookup.userid, "Reply 2");
-        reply2.initComment(103, 100, lookup.userid, "Reply 3");
-        
+        reply2.initComment(102, 101, lookup.userid, "Reply2");
+        reply3.initComment(103, 100, lookup.userid, "Reply3");
+
         pq.insertStory(story);
         pq.insertCommentWithLookup(reply1);
         pq.insertCommentWithLookup(reply2);
         pq.insertCommentWithLookup(reply3);
+    }
+
+    /* Story
+            Reply1
+            Reply2
+     */
+    @Test
+    public void insertAnotherStory() throws SQLException {
+        UserQueries uq = new UserQueries();
+        PostQueries pq = new PostQueries();
+        ArrayList<Post> thread;
+
+        Post story = new Post();
+        Post reply1 = new Post();
+        Post reply2 = new Post();
+
+        User u, lookup;
+
+        u = new User(-1, "user", "authortwo", "authorpwd");
+        uq.insertUser(u);
+
+        lookup = uq.getUserByName("authortwo");
+        assertNotEquals(null, lookup);
+
+        story.initStory(200, lookup.userid, "The second story");
+        reply1.initComment(201, 200, lookup.userid, "Reply1 to story2");
+        reply2.initComment(202, 200, lookup.userid, "Reply2 to story2");
+
+        pq.insertStory(story);
+        pq.insertCommentWithLookup(reply1);
+        pq.insertCommentWithLookup(reply2);
+
+        thread = pq.getThread(200);
+
+        assertEquals(3, thread.size());
     }
 }
