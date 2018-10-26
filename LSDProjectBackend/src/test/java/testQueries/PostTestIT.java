@@ -38,9 +38,7 @@ public class PostTestIT {
         Post reply2 = new Post();
         Post reply3 = new Post();
 
-        User u;
-
-        u = new User(-1, "user", "authorone", "authorpwd");
+        User u = new User(-1, "user", "authorone", "authorpwd");
         uq.insertUser(u);
 
         story.initStory(100, "The story");
@@ -61,87 +59,80 @@ public class PostTestIT {
 
         assertEquals(4, thread.size());
     }
-//
-//    /* Story
-//            Reply1
-//            Reply2
-//     */
-//    @Test
-//    public void insertAnotherStoryTest() throws SQLException {
-//        UserQueries uq = new UserQueries();
-//        PostQueries pq = new PostQueries();
-//        ArrayList<Post> thread;
-//
-//        Post story = new Post();
-//        Post reply1 = new Post();
-//        Post reply2 = new Post();
-//
-//        User u, lookup;
-//
-//        u = new User(-1, "user", "authortwo", "authorpwd");
-//        uq.insertUser(u);
-//
-//        lookup = uq.getUserByName("authortwo");
-//        assertNotEquals(null, lookup);
-//
-//        story.initStory(200, lookup.userid, "The second story");
-//        reply1.initComment(201, 200, lookup.userid, "Reply1 to story2");
-//        reply2.initComment(202, 200, lookup.userid, "Reply2 to story2");
-//
-//        pq.insertStory(story);
-//        pq.insertCommentWithLookup(reply1);
-//        pq.insertCommentWithLookup(reply2);
-//
-//        thread = pq.getThread(200);
-//
-//        assertEquals(3, thread.size());
-//    }
-//
-//    @Test
-//    public void getMostRecentPostTest() throws SQLException {
-//        UserQueries uq = new UserQueries();
-//        PostQueries pq = new PostQueries();
-//        User u = new User(-1, "user", "authorthree", "authorpwd");
-//        User lookup;
-//        Post p = new Post();
-//        Post recentLookup;
-//
-//        uq.insertUser(u);
-//
-//        lookup = uq.getUserByName("authorthree");
-//        p.initStory(300, lookup.userid, "Story three");
-//
-//        pq.insertStory(p);
-//
-//        recentLookup = pq.getMostRecentPost();
-//        /* lah: dette er ikke garanteret at været 100% ajour
-//        assertEquals(p.postauthorid, recentLookup.postauthorid);
-//        assertEquals(p.postcontent, recentLookup.postcontent);*/
-//        assertNotNull(recentLookup);
-//
-//    }
-//
-//    @Test
-//    public void getFrontPageTest() throws SQLException {
-//        UserQueries uq = new UserQueries();
-//        PostQueries pq = new PostQueries();
-//        User u = new User(-1, "user", "authorfour", "authorpwd");
-//        User lookup;
-//        Post p = new Post();
-//        ArrayList<Post> frontpage;
-//
-//        uq.insertUser(u);
-//        lookup = uq.getUserByName("authorfour");
-//
-//        p.initStory(400, lookup.userid, "Lorem story");
-//        pq.insertStory(p, "authorfour", "authorpwd");
-//
-//        frontpage = pq.getMostRecentStories();
-//
-//        assertNotEquals(0, frontpage.size());
-//
-//        for (Post tmp : frontpage) {
-//            assertEquals("story", tmp.posttype);
-//        }
-//    }
+
+    /* Story
+            Reply1
+            Reply2
+     */
+    @Test
+    public void insertAnotherStoryTest() throws SQLException {
+        UserQueries uq = new UserQueries();
+        PostQueries pq = new PostQueries();
+        ArrayList<Post> thread;
+
+        Post story = new Post();
+        Post reply1 = new Post();
+        Post reply2 = new Post();
+
+        User u = new User(-1, "user", "authortwo", "authorpwd");
+        uq.insertUser(u);
+
+        story.initStory(200, "The second story");
+        reply1.initComment(201, 200, "Reply1 to story2");
+        reply2.initComment(202, 200, "Reply2 to story2");
+
+        assertEquals(PostQueries.STATUS.OK,
+                pq.insertStory(story, "authortwo", "authorpwd"));
+        assertEquals(PostQueries.STATUS.OK,
+                pq.insertCommentWithLookup(reply1, "authortwo", "authorpwd"));
+        assertEquals(PostQueries.STATUS.OK,
+                pq.insertCommentWithLookup(reply2, "authortwo", "authorpwd"));
+
+        thread = pq.getThread(200);
+
+        assertEquals(3, thread.size());
+    }
+
+    @Test
+    public void getMostRecentPostTest() throws SQLException {
+        UserQueries uq = new UserQueries();
+        PostQueries pq = new PostQueries();
+        User u = new User(-1, "user", "authorthree", "authorpwd");
+        Post p = new Post();
+        Post recentLookup;
+
+        uq.insertUser(u);
+        p.initStory(300, "Story three");
+
+        pq.insertStory(p, "authorthree", "authorpwd");
+
+        recentLookup = pq.getMostRecentPost();
+        /* lah: dette er ikke garanteret at været 100% ajour
+        assertEquals(p.postauthorid, recentLookup.postauthorid);
+        assertEquals(p.postcontent, recentLookup.postcontent);*/
+        assertNotNull(recentLookup);
+
+    }
+
+    @Test
+    public void getFrontPageTest() throws SQLException {
+        UserQueries uq = new UserQueries();
+        PostQueries pq = new PostQueries();
+        User u = new User(-1, "user", "authorfour", "authorpwd");
+        Post p = new Post();
+        ArrayList<Post> frontpage;
+
+        uq.insertUser(u);
+
+        p.initStory(400, "Lorem story");
+        pq.insertStory(p, "authorfour", "authorpwd");
+
+        frontpage = pq.getMostRecentStories();
+
+        assertNotEquals(0, frontpage.size());
+
+        for (Post tmp : frontpage) {
+            assertEquals("story", tmp.posttype);
+        }
+    }
 }
