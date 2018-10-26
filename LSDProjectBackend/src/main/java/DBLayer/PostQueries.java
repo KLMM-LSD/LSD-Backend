@@ -23,6 +23,30 @@ public class PostQueries {
     private static final String GET_THREAD_QUERY = "SELECT * FROM posts WHERE posts.postthreadid = ? OR posts.postid = ? ORDER BY posts.postid";
     private static final String GET_POST_QUERY = "SELECT * FROM posts WHERE postid = ?";
     private static final String GET_MOST_RECENT_POST_QUERY = "SELECT * FROM posts ORDER BY postid DESC LIMIT 1";
+    private static final String GET_MOST_RECENT_STORIES_QUERY = "SELECT * FROM posts WHERE posttype = ? ORDER BY postid DESC LIMIT ?";
+
+    private static final int MAX_FRONTPAGE_STORIES = 10;
+
+    public ArrayList<Post> getMostRecentStories() throws SQLException {
+        Connection con = HikariCPDataSource.getConnection();
+        ArrayList<Post> ret = new ArrayList<>();
+        ResultSet rs;
+
+        PreparedStatement st = con.prepareStatement(GET_MOST_RECENT_STORIES_QUERY);
+
+        st.setString(1, "story");
+        st.setInt(2, MAX_FRONTPAGE_STORIES);
+        rs = st.executeQuery();
+
+        while (rs.next()) {
+            Post tmp = getPostFromResultSet(rs);
+            ret.add(tmp);
+        }
+
+        con.close();
+
+        return ret;
+    }
 
     /* 0 er ikke NULL i MySQL */
     public void insertStory(Post p) throws SQLException {
@@ -51,14 +75,7 @@ public class PostQueries {
         rs = st.executeQuery();
 
         while (rs.next()) {
-            int postid = rs.getInt("postid");
-            String posttype = rs.getString("posttype");
-            int postparentid = rs.getInt("postparentid");
-            int postauthorid = rs.getInt("postauthorid");
-            int postthreadid = rs.getInt("postthreadid");
-            String postcontent = rs.getString("postcontent");
-
-            ret = new Post(postid, posttype, postparentid, postauthorid, postthreadid, postcontent);
+            ret = getPostFromResultSet(rs);
         }
 
         con.close();
@@ -126,14 +143,7 @@ public class PostQueries {
         ResultSet rs = st.executeQuery();
 
         while (rs.next()) {
-            int postid = rs.getInt("postid");
-            String posttype = rs.getString("posttype");
-            int postparentid = rs.getInt("postparentid");
-            int authorid = rs.getInt("postauthorid");
-            int postthreadid = rs.getInt("postthreadid");
-            String postcontent = rs.getString("postcontent");
-
-            Post tmp = new Post(postid, posttype, postparentid, authorid, postthreadid, postcontent);
+            Post tmp = getPostFromResultSet(rs);
             ret.add(tmp);
         }
 
@@ -142,4 +152,15 @@ public class PostQueries {
         return ret;
     }
 
+    private Post getPostFromResultSet(ResultSet rs) throws SQLException {
+        int postid = rs.getInt("postid");
+        String posttype = rs.getString("posttype");
+        int postparentid = rs.getInt("postparentid");
+        int authorid = rs.getInt("postauthorid");
+        int postthreadid = rs.getInt("postthreadid");
+        String postcontent = rs.getString("postcontent");
+
+        Post ret = new Post(postid, posttype, postparentid, authorid, postthreadid, postcontent);
+        return ret;
+    }
 }
