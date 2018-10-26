@@ -9,23 +9,26 @@ import DBLayer.UserQueries;
 import entities.User;
 import java.sql.SQLException;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 import org.junit.Test;
 
 /**
  *
  * @author Lasse
  */
-public class UserTest {
+public class UserTestIT {
 
     @Test
     public void insertUser() throws SQLException {
         UserQueries uq = new UserQueries();
-        int before = uq.countUsers();
-        int after;
-        
         User lookup;
-        User u1 = new User(1, "user", "poobread", "abcdef", "I am a user");
-        User u2 = new User(2, "user", "einstein", "dasdas", "I am clever");
+        int before, after;
+        
+        
+        before = uq.countUsers();
+        
+        User u1 = new User(-1, "user", "poobread", "abcdef");
+        User u2 = new User(-1, "user", "einstein", "dasdas");
 
         uq.insertUser(u1);
         uq.insertUser(u2);
@@ -33,8 +36,10 @@ public class UserTest {
         after = uq.countUsers();
 
         assertEquals(before + 2, after);
-        
+
         lookup = uq.getUserByName("einstein");
-        assertEquals(2, lookup.userid);
+        assertEquals("einstein", lookup.username);
+        assertEquals("dasdas", lookup.userpassword);
+        assertNotEquals(-1, lookup.userid);
     }
 }

@@ -15,14 +15,14 @@ public class User {
     public String usertype;
     public String username;
     public String userpassword;
-    public String userabout;
 
-    public User(int userid, String usertype, String username, String userpassword, String userabout) {
+    public User(int userid, String usertype, String username, String userpassword) {
         this.userid = userid;
         this.usertype = usertype;
         this.username = username;
         this.userpassword = userpassword;
-        this.userabout = userabout;
     }
+    
+    
 
 }

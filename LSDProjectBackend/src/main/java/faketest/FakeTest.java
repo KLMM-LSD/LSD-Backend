@@ -30,8 +30,8 @@ public class FakeTest {
         Post p4 = new Post();
         Post p5 = new Post();
 
-        User u1 = new User(1, "user", "poobread", "abcdef", "I am a user");
-        User u2 = new User(2, "user", "einstein", "dasdas", "I am clever");
+        User u1 = new User(-1, "user", "poobread", "abcdef");
+        User u2 = new User(-1, "user", "einstein", "dasdas");
 
         p1.initStory(1, 1, "Story quite a story");
         p2.initComment(2, 1, 2, "Comment good story");

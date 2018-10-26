@@ -13,16 +13,16 @@ import java.sql.Statement;
  */
 public class UserQueries {
 
-    private static final String INSERT_USER_QUERY = "INSERT INTO users VALUES (?, ?, ?, ?, ?)";
+    private static final String INSERT_USER_QUERY = "INSERT INTO users (usertype, username, userpassword) VALUES (?, ?, ?)";
     private static final String COUNT_USERS_QUERY = "SELECT COUNT(*) FROM users";
     private static final String GET_USER_BY_NAME = "SELECT * FROM users WHERE username = ?";
 
     public User getUserByName(String name) throws SQLException {
         Connection con = HikariCPDataSource.getConnection();
         PreparedStatement st = con.prepareStatement(GET_USER_BY_NAME);
-        
+
         st.setString(1, name);
-        
+
         ResultSet rs = st.executeQuery();
         User ret = null;
 
@@ -31,9 +31,8 @@ public class UserQueries {
             String usertype = rs.getString("usertype");
             String username = rs.getString("username");
             String userpassword = rs.getString("userpassword");
-            String userabout = rs.getString("userabout");
 
-            ret = new User(userid, usertype, username, userpassword, userabout);
+            ret = new User(userid, usertype, username, userpassword);
         }
         con.close();
 
@@ -58,11 +57,9 @@ public class UserQueries {
         Connection con = HikariCPDataSource.getConnection();
         PreparedStatement st = con.prepareStatement(INSERT_USER_QUERY);
 
-        st.setInt(1, u.userid);
-        st.setString(2, u.usertype);
-        st.setString(3, u.username);
-        st.setString(4, u.userpassword);
-        st.setString(5, u.userabout);
+        st.setString(1, u.usertype);
+        st.setString(2, u.username);
+        st.setString(3, u.userpassword);
 
         st.execute();
 

@@ -7,12 +7,15 @@ package service;
 
 import DBLayer.UserQueries;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import entities.User;
 import java.sql.SQLException;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.Produces;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.MediaType;
 
@@ -49,7 +52,7 @@ public class UserResource {
         JsonObject jo = new JsonObject();
 
         jo.addProperty("username", u.username);
-        jo.addProperty("userabout", u.userabout);
+        jo.addProperty("userid", u.userid);
 
         return jo.toString();
     }
@@ -61,6 +64,22 @@ public class UserResource {
         UserQueries uq = new UserQueries();
         return "Result: " + uq.countUsers();
     }
+
+    @POST
+    @Path("create")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.TEXT_PLAIN)
+    public String fakeCreate(String body) {
+        String ret = "todo";
+
+        JsonParser jp = new JsonParser();
+        JsonObject jo = jp.parse(body).getAsJsonObject();
+
+        ret += jo.get("username").getAsString();
+
+        return ret;
+    }
+
 //
 //    @POST
 //    @Consumes(MediaType.APPLICATION_JSON)
