@@ -36,22 +36,19 @@ public class PostQueries {
     private static final int MAX_FRONTPAGE_STORIES = 10;
 
     public ArrayList<Post> getMostRecentStories() throws SQLException {
-        Connection con = HikariCPDataSource.getConnection();
-        ArrayList<Post> ret = new ArrayList<>();
-        ResultSet rs;
-
-        PreparedStatement st = con.prepareStatement(GET_MOST_RECENT_STORIES_QUERY);
-
-        st.setString(1, "story");
-        st.setInt(2, MAX_FRONTPAGE_STORIES);
-        rs = st.executeQuery();
-
-        while (rs.next()) {
-            Post tmp = getPostFromResultSet(rs);
-            ret.add(tmp);
+        ArrayList<Post> ret;
+        try (Connection con = HikariCPDataSource.getConnection()) {
+            ret = new ArrayList<>();
+            ResultSet rs;
+            PreparedStatement st = con.prepareStatement(GET_MOST_RECENT_STORIES_QUERY);
+            st.setString(1, "story");
+            st.setInt(2, MAX_FRONTPAGE_STORIES);
+            rs = st.executeQuery();
+            while (rs.next()) {
+                Post tmp = getPostFromResultSet(rs);
+                ret.add(tmp);
+            }
         }
-
-        con.close();
 
         return ret;
     }
@@ -79,18 +76,16 @@ public class PostQueries {
     }
 
     public Post getMostRecentPost() throws SQLException {
-        Connection con = HikariCPDataSource.getConnection();
-        ResultSet rs;
-        Post ret = null;
-
-        PreparedStatement st = con.prepareStatement(GET_MOST_RECENT_POST_QUERY);
-        rs = st.executeQuery();
-
-        while (rs.next()) {
-            ret = getPostFromResultSet(rs);
+        Post ret;
+        try (Connection con = HikariCPDataSource.getConnection()) {
+            ResultSet rs;
+            ret = null;
+            PreparedStatement st = con.prepareStatement(GET_MOST_RECENT_POST_QUERY);
+            rs = st.executeQuery();
+            while (rs.next()) {
+                ret = getPostFromResultSet(rs);
+            }
         }
-
-        con.close();
 
         return ret;
     }
@@ -128,13 +123,6 @@ public class PostQueries {
         }
     }
 
-//    public void insertComment(Post p, String username, String password) throws SQLException {
-//        Connection con = HikariCPDataSource.getConnection();
-//        if (verifyCredentials(con, username, password)) {
-//            insertCommentUsingCon(con, p);
-//        }
-//        con.close();
-//    }
     private void insertCommentUsingCon(Connection con, Post p) throws SQLException {
         PreparedStatement st = con.prepareStatement(INSERT_COMMENT_QUERY);
 
@@ -167,20 +155,19 @@ public class PostQueries {
 
     public ArrayList<Post> getThread(int threadid) throws SQLException {
         ArrayList<Post> ret = new ArrayList<>();
-        Connection con = HikariCPDataSource.getConnection();
-        PreparedStatement st = con.prepareStatement(GET_THREAD_QUERY);
+        try (Connection con = HikariCPDataSource.getConnection()) {
+            PreparedStatement st = con.prepareStatement(GET_THREAD_QUERY);
 
-        st.setInt(1, threadid);
-        st.setInt(2, threadid);
+            st.setInt(1, threadid);
+            st.setInt(2, threadid);
 
-        ResultSet rs = st.executeQuery();
+            ResultSet rs = st.executeQuery();
 
-        while (rs.next()) {
-            Post tmp = getPostFromResultSet(rs);
-            ret.add(tmp);
+            while (rs.next()) {
+                Post tmp = getPostFromResultSet(rs);
+                ret.add(tmp);
+            }
         }
-
-        con.close();
 
         return ret;
     }
