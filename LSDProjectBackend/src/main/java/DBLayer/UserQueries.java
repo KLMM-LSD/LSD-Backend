@@ -65,5 +65,20 @@ public class UserQueries {
 
         con.close();
     }
+    
+    public void insertUserWithConnection(Connection con, User u) throws SQLException {
+        PreparedStatement st = con.prepareStatement(INSERT_USER_QUERY);
+
+        st.setString(1, u.usertype);
+        st.setString(2, u.username);
+        st.setString(3, u.userpassword);
+
+        st.execute();
+    }
+    
+    public Connection getConnection() throws SQLException {
+        Connection ret = HikariCPDataSource.getConnection();
+        return ret;
+    }
 
 }
