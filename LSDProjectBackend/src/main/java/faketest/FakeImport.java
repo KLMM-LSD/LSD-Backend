@@ -19,15 +19,14 @@ import java.sql.SQLException;
  * @author Lasse
  */
 public class FakeImport {
-    
-    /* phyxx was there twice, removed */
 
+    /* phyxx was there twice, removed */
     public static void main(String[] args) throws IOException, SQLException {
         UserQueries uq = new UserQueries();
         Connection con = uq.getConnection();
-        
+
         con.setAutoCommit(false);
-        
+
         FileInputStream fstream = new FileInputStream("C:\\Users\\Lasse\\Desktop\\skolestest\\users.csv\\copy.csv");
         BufferedReader br = new BufferedReader(new InputStreamReader(fstream));
         long before, after;
@@ -43,9 +42,10 @@ public class FakeImport {
             /* uq.insertUser(u); */
             uq.insertUserWithConnection(con, u);
             System.out.println(i++);
-            
-            if (i % 10000 == 0)
+
+            if (i % 16384 == 0) {
                 con.commit();
+            }
         }
         br.close();
         con.commit();

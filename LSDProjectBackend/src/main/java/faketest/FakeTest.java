@@ -40,7 +40,7 @@ public class FakeTest {
         ret.add("arr_postauthorid", arr_postauthorid);
         ret.add("arr_postcontent", arr_postcontent);
 
-        ret.addProperty("len", ret.size());
+        ret.addProperty("len", list.size());
         
         System.out.println(ret.toString());
     }

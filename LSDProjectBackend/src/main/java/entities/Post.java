@@ -18,21 +18,19 @@ public class Post {
     public int postthreadid;
     public String postcontent;
 
-    public void initStory(int postid, int postauthorid, String postcontent) {
+    public void initStory(int postid, String postcontent) {
         this.postid = postid;
         this.posttype = "story";
         /* this.postparentid = NULL; */
-        this.postauthorid = postauthorid;
         /* this.postthreadid = NULL; */
         this.postcontent = postcontent;
     }
     
-    public void initComment(int postid, int postparentid, int postauthorid, String postcontent)
+    public void initComment(int postid, int postparentid, String postcontent)
     {
         this.postid = postid;
         this.posttype = "comment";
         this.postparentid = postparentid;
-        this.postauthorid = postauthorid;
         /* this.postthreadid = NULL; */
         this.postcontent = postcontent;
     }

@@ -6,6 +6,7 @@
 package DBLayer;
 
 import entities.Post;
+import entities.User;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -24,6 +25,13 @@ public class PostQueries {
     private static final String GET_POST_QUERY = "SELECT * FROM posts WHERE postid = ?";
     private static final String GET_MOST_RECENT_POST_QUERY = "SELECT * FROM posts ORDER BY postid DESC LIMIT 1";
     private static final String GET_MOST_RECENT_STORIES_QUERY = "SELECT * FROM posts WHERE posttype = ? ORDER BY postid DESC LIMIT ?";
+    private static final String LOOKUP_USER_CREDENTIASL = "SELECT * FROM users WHERE username = ? AND userpassword = ?";
+
+    public enum STATUS {
+        OK,
+        UNAUTHORIZED,
+        MALFORMED_INPUT
+    }
 
     private static final int MAX_FRONTPAGE_STORIES = 10;
 
@@ -48,22 +56,26 @@ public class PostQueries {
         return ret;
     }
 
-    /* 0 er ikke NULL i MySQL */
-    public void insertStory(Post p) throws SQLException {
-        Connection con = HikariCPDataSource.getConnection();
+    public STATUS insertStory(Post p, String username, String password) throws SQLException {
+        try (Connection con = HikariCPDataSource.getConnection()) {
+            int authorid = verifyCredentials(con, username, password);
 
-        PreparedStatement st = con.prepareStatement(INSERT_STORY_QUERY);
+            if (authorid == 0) {
+                return STATUS.UNAUTHORIZED;
+            }
 
-        st.setInt(1, p.postid);
-        st.setString(2, p.posttype);
-        /* story er root, ingen parent */
-        st.setInt(3, p.postauthorid);
-        /* story er root, ingen threadid */
-        st.setString(4, p.postcontent);
+            PreparedStatement st = con.prepareStatement(INSERT_STORY_QUERY);
 
-        st.execute();
+            st.setInt(1, p.postid);
+            st.setString(2, p.posttype);
+            /* story er root, ingen parent */
+            st.setInt(3, authorid);
+            /* story er root, ingen threadid */
+            st.setString(4, p.postcontent);
 
-        con.close();
+            st.execute();
+            return STATUS.OK;
+        }
     }
 
     public Post getMostRecentPost() throws SQLException {
@@ -83,42 +95,46 @@ public class PostQueries {
         return ret;
     }
 
-    public void insertCommentWithLookup(Post p) throws SQLException {
-        Connection con = HikariCPDataSource.getConnection();
-        PreparedStatement parent_st = con.prepareStatement(GET_POST_QUERY);
-        ResultSet parent_rs;
+    public STATUS insertCommentWithLookup(Post p, String username, String password) throws SQLException {
+        PreparedStatement st;
+        ResultSet rs;
         boolean found = false;
 
-        parent_st.setInt(1, p.postparentid);
-        parent_rs = parent_st.executeQuery();
-
-        while (parent_rs.next()) {
-            if (parent_rs.getString("posttype").equals("story")) {
-                p.postthreadid = p.postparentid;
-//                System.out.println("Use parent id as threadid" + p.postthreadid);
-            } else {
-                p.postthreadid = parent_rs.getInt("postthreadid");
-//                System.out.println("Use threadid as threaid" + p.postthreadid);
+        try (Connection con = HikariCPDataSource.getConnection()) {
+            int authorid = verifyCredentials(con, username, password);
+            if (authorid == 0) {
+                return STATUS.UNAUTHORIZED;
             }
-            found = true;
-        }
 
-        if (found) {
-            PreparedStatement st = con.prepareStatement(INSERT_COMMENT_QUERY);
+            st = con.prepareStatement(GET_POST_QUERY);
+            st.setInt(1, p.postparentid);
+            rs = st.executeQuery();
+
+            while (rs.next()) {
+                found = true;
+                p.postthreadid = (rs.getString("posttype").equals("story"))
+                        ? p.postparentid
+                        : rs.getInt("postthreadid");
+            }
+
+            if (!found) {
+                return STATUS.MALFORMED_INPUT;
+            }
+
+            p.postauthorid = authorid;
+
             insertCommentUsingCon(con, p);
-        } else {
-            System.out.println("No such parent");
+            return STATUS.OK;
         }
-
-        con.close();
     }
 
-    public void insertComment(Post p) throws SQLException {
-        Connection con = HikariCPDataSource.getConnection();
-        insertCommentUsingCon(con, p);
-        con.close();
-    }
-
+//    public void insertComment(Post p, String username, String password) throws SQLException {
+//        Connection con = HikariCPDataSource.getConnection();
+//        if (verifyCredentials(con, username, password)) {
+//            insertCommentUsingCon(con, p);
+//        }
+//        con.close();
+//    }
     private void insertCommentUsingCon(Connection con, Post p) throws SQLException {
         PreparedStatement st = con.prepareStatement(INSERT_COMMENT_QUERY);
 
@@ -130,6 +146,23 @@ public class PostQueries {
         st.setString(6, p.postcontent);
 
         st.execute();
+    }
+
+    private int verifyCredentials(Connection con, String username, String password) throws SQLException {
+        PreparedStatement st = con.prepareStatement(LOOKUP_USER_CREDENTIASL);
+        ResultSet rs;
+        int ret = 0;
+
+        st.setString(1, username);
+        st.setString(2, password);
+
+        rs = st.executeQuery();
+
+        while (rs.next()) {
+            ret = rs.getInt("userid");
+        }
+
+        return ret;
     }
 
     public ArrayList<Post> getThread(int threadid) throws SQLException {
