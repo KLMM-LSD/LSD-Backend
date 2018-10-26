@@ -6,7 +6,6 @@
 package DBLayer;
 
 import entities.Post;
-import entities.User;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
