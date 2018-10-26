@@ -66,7 +66,22 @@ public class PostResource {
         return ret.toString();
     }
 
-    /* TODO: ThreadID */
+    @GET
+    @Path("recent")
+    @Produces(MediaType.TEXT_PLAIN)
+    public Response getRecentPost() {
+        PostQueries pq = new PostQueries();
+
+        try {
+            Post ret = pq.getMostRecentPost();
+            return Response.ok(ret.postid).build();
+        } catch (SQLException ex) {
+            Logger.getLogger(PostResource.class.getName()).log(Level.SEVERE, null, ex);
+            return Response.status(500).build();
+        }
+
+    }
+
     @GET
     @Path("thread")
     @Produces(MediaType.APPLICATION_JSON)
