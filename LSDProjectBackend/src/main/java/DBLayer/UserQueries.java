@@ -16,6 +16,7 @@ public class UserQueries {
     private static final String INSERT_USER_QUERY = "INSERT INTO users (usertype, username, userpassword) VALUES (?, ?, ?)";
     private static final String COUNT_USERS_QUERY = "SELECT COUNT(*) FROM users";
     private static final String GET_USER_BY_NAME = "SELECT * FROM users WHERE username = ?";
+    private static final String DELETE_USER_BY_NAME = "DELETE FROM users where username = ?";
 
     public User getUserByName(String name) throws SQLException {
         Connection con = HikariCPDataSource.getConnection();
@@ -79,6 +80,12 @@ public class UserQueries {
     public Connection getConnection() throws SQLException {
         Connection ret = HikariCPDataSource.getConnection();
         return ret;
+    }
+    public void removeUser(String username) throws SQLException{
+        Connection con = HikariCPDataSource.getConnection();
+        PreparedStatement st = con.prepareStatement(DELETE_USER_BY_NAME);
+        st.setString(1, username);
+        st.execute();
     }
 
 }
