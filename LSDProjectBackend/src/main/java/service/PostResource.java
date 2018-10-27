@@ -15,6 +15,7 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
@@ -43,9 +44,13 @@ public class PostResource {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.TEXT_PLAIN)
-    public Response makeNewPost(String body) {
+    public Response makeNewPost(@HeaderParam("Authorization") String auth, String body) {
         LoginInfo li = new LoginInfo();
-        Post p = getValidUserInput(body, li);
+        if (!li.parseAuth(auth)) {
+            return Response.status(403).build();
+        }
+
+        Post p = getValidUserInput(body);
         PostQueries pq = new PostQueries();
 
         if (p == null) {
@@ -74,7 +79,7 @@ public class PostResource {
         /* return Response.status(500).build(); */
     }
 
-    private Post getValidUserInput(String body, LoginInfo li) {
+    private Post getValidUserInput(String body) {
         JsonParser jp = new JsonParser();
         JsonElement je = jp.parse(body);
 
@@ -83,20 +88,6 @@ public class PostResource {
         }
 
         JsonObject jo = je.getAsJsonObject();
-
-        JsonElement username = jo.get("username");
-        if (username == null) {
-            return null;
-        }
-
-        JsonElement pwd_hash = jo.get("pwd_hash");
-        if (pwd_hash == null) {
-            return null;
-        }
-
-        li.username = username.getAsString();
-        li.password = pwd_hash.getAsString();
-
         JsonElement post_type = jo.get("post_type");
         if (post_type == null) {
             return null;
@@ -147,5 +138,4 @@ public class PostResource {
         return null;
     }
 
-    
 }

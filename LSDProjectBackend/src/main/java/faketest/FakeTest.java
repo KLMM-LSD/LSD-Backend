@@ -13,6 +13,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import entities.Post;
 import entities.User;
+import helper_entities.LoginInfo;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -53,23 +54,35 @@ public class FakeTest {
                 + "	\"userpassword\": \"someuser\"\n"
                 + "}";
         UserQueries uq = new UserQueries();
-        
+
         JsonParser jp = new JsonParser();
         JsonObject jo = jp.parse(json).getAsJsonObject();
         JsonElement username = jo.get("username");
-        
+
         if (username == null) {
             System.out.println("malformed");
             return;
         }
         String userpassword = jo.get("userpassword").getAsString();
-        
+
         User u = new User(-1, "user", username.getAsString(), userpassword);
-        
+
         uq.insertUser(u);
     }
 
+    public static void testAuth() {
+        LoginInfo li = new LoginInfo();
+        String auth = "Basic QWxhZGRpbjpPcGVuU2VzYW1l";
+
+        if (li.parseAuth(auth)) {
+            System.out.println("username: [" + li.username + "]");
+            System.out.println("password: [" + li.password + "]");
+        } else {
+            System.out.println("Nope");
+        }
+    }
+
     public static void main(String[] args) throws SQLException {
-        testPreview();
+        testAuth();
     }
 }

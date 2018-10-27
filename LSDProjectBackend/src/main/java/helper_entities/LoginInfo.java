@@ -5,6 +5,8 @@
  */
 package helper_entities;
 
+import com.sun.jersey.core.util.Base64;
+
 /**
  *
  * @author Lasse
@@ -21,7 +23,25 @@ public class LoginInfo {
         this.username = username;
         this.password = password;
     }
-    
-    
-    
+
+    public boolean parseAuth(String auth) {
+        if (auth == null) {
+            return false;
+        }
+
+        String[] split = auth.split(" ");
+        if (split.length != 2) {
+            return false;
+        }
+
+        String decode = Base64.base64Decode(split[1]);
+        
+        String[] parse = decode.split(":");
+        this.username = parse[0];
+        this.password = parse[1];
+        
+
+        return true;
+    }
+
 }
