@@ -1,3 +1,4 @@
-<jboss-web>
-    <context-root>/</context-root>
+<?xml version="1.0" encoding="UTF-8"?>
+<jboss-web xmlns="http://www.jboss.com/xml/ns/javaee">
+  <context-root>/LSDProjectBackend</context-root>
 </jboss-web>
