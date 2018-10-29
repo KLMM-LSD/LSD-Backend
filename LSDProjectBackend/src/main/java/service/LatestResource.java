@@ -43,7 +43,7 @@ public class LatestResource {
 
         try {
             Post ret = pq.getMostRecentPost();
-            return Response.ok(ret.postid).build();
+            return Response.ok(ret.postid + ": This is the latest post id").build();
 
         } catch (SQLException ex) {
             Logger.getLogger(PostResource.class
