@@ -25,7 +25,6 @@ public class LoginInfo {
     }
 
     public boolean parseAuth(String auth) {
-        System.out.println("######################################## " + auth);
         if (auth == null) {
             return false;
         }
@@ -36,10 +35,8 @@ public class LoginInfo {
         }
         
         String actualDecode = split[1].substring(2,split[1].length()-1);
-        
-        System.out.println("################################ " + actualDecode);
         String decode = Base64.base64Decode(actualDecode);
-        System.out.println("###################################### " + decode);
+        
         String[] parse = decode.split(":");
         this.username = parse[0];
         this.password = parse[1];
