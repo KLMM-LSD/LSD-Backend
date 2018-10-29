@@ -26,8 +26,6 @@ public class HikariCPDataSource {
         config.setJdbcUrl("jdbc:mysql://localhost:3306/lsd?zeroDateTimeBehaviour=convertToNull&serverTimezone=UTC&useSSL=false");
         config.setUsername("root");
         config.setPassword("root");
-//        Michael password
-//        config.setPassword("root123");
 
         /* maximum time (in milliseconds) that a call to getConnection() will
            wait for a connection before timing out. */
