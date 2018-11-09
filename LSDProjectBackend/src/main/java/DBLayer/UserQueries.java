@@ -94,8 +94,11 @@ public class UserQueries {
     // Experimental 
     public ArrayList<User> getUsersByStartLetter(String letter) throws SQLException {
         Connection con = HikariCPDataSource.getConnection();
-        PreparedStatement st = con.prepareStatement("SELECT * FROM users WHERE username LIKE '?%'");
-        st.setString(1, letter);
+        PreparedStatement st = con.prepareStatement("SELECT * FROM users WHERE username LIKE '" + letter + "%'");
+        if(letter.length() != 1){
+            return null;
+        } 
+        //st.setString(1, letter);
         ArrayList<User> usersWithLetters = new ArrayList<>();
         ResultSet rs = st.executeQuery();
         while (rs.next()) {

@@ -8,9 +8,11 @@ package testQueries;
 import DBLayer.UserQueries;
 import entities.User;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import org.junit.AfterClass;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertTrue;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -21,18 +23,21 @@ import org.junit.Test;
 public class UserTestIT {
 
     private static UserQueries uq;
-    
+
     @BeforeClass
-    public static void setUp(){
+    public static void setUp() throws SQLException {
         uq = new UserQueries();
-    }
-    
-    @AfterClass
-    public static void  cleanUp() throws SQLException{
+        //remove testusers in case the already exist
         uq.removeUser("einstein");
         uq.removeUser("poobread");
     }
-    
+
+    @AfterClass
+    public static void cleanUp() throws SQLException {
+        uq.removeUser("einstein");
+        uq.removeUser("poobread");
+    }
+
     @Test
     public void insertUser() throws SQLException {
         User lookup;
@@ -54,5 +59,11 @@ public class UserTestIT {
         assertEquals("einstein", lookup.username);
         assertEquals("dasdas", lookup.userpassword);
         assertNotEquals(-1, lookup.userid);
+    }
+    
+    @Test
+    public void testUserByAlphabet() throws SQLException {
+        ArrayList<User> testUsers = uq.getUsersByStartLetter("a");
+        assertTrue(testUsers.size() > 2);
     }
 }

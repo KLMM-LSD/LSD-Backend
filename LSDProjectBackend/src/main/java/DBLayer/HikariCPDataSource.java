@@ -53,7 +53,7 @@ public class HikariCPDataSource {
             logger.info("Connected to database!");
             return ds.getConnection();
         } catch (SQLException e) {
-            logger.error("Couldn't get connection " + e);
+            logger.error("Couldn't get connection " + e.getMessage());
             return null;
         }
     }
