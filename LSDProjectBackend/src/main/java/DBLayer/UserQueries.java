@@ -6,6 +6,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -66,7 +68,7 @@ public class UserQueries {
 
         con.close();
     }
-    
+
     public void insertUserWithConnection(Connection con, User u) throws SQLException {
         PreparedStatement st = con.prepareStatement(INSERT_USER_QUERY);
 
@@ -76,16 +78,35 @@ public class UserQueries {
 
         st.execute();
     }
-    
+
     public Connection getConnection() throws SQLException {
         Connection ret = HikariCPDataSource.getConnection();
         return ret;
     }
-    public void removeUser(String username) throws SQLException{
+
+    public void removeUser(String username) throws SQLException {
         Connection con = HikariCPDataSource.getConnection();
         PreparedStatement st = con.prepareStatement(DELETE_USER_BY_NAME);
         st.setString(1, username);
         st.execute();
+    }
+
+    // Experimental 
+    public ArrayList<User> getUsersByStartLetter(String letter) throws SQLException {
+        Connection con = HikariCPDataSource.getConnection();
+        PreparedStatement st = con.prepareStatement("SELECT * FROM users WHERE username LIKE '?%'");
+        st.setString(1, letter);
+        ArrayList<User> usersWithLetters = new ArrayList<>();
+        ResultSet rs = st.executeQuery();
+        while (rs.next()) {
+            User temp = new User();
+            temp.userid = rs.getInt("userid");
+            temp.usertype = rs.getString("usertype");
+            temp.username = rs.getString("username");
+            temp.userpassword = rs.getString("userpassword");
+            usersWithLetters.add(temp);
+        }
+        return usersWithLetters;
     }
 
 }
