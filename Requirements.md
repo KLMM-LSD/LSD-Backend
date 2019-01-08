@@ -11,10 +11,14 @@ Test manager
 Architecture manager
 - Lasse Hansen
 
+Devops engineer
+- Kristjan Gasadal
+
 Developers
 - Lasse Hansen
 - Martin Hansen
 - Michael Veilis
+- Kristjan Gasadal
 
 ### Hacker news, reddit like site Requirement:
 
